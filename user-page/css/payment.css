@@ -1,0 +1,269 @@
+
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,300);
+/* body {
+  background-color:  #ffb242;
+  font-family: lato, 'helvetica-light';
+  position: relative;
+  text-transform: uppercase;
+  padding: 20px 0;
+} */
+
+.payment #amount {
+  font-size: 12px;
+}
+
+.payment #amount strong {
+  font-size: 14px;
+}
+
+.payment #card-back {
+  top: 40px;
+  right: 0;
+  z-index: -2;
+}
+
+.payment #card-btn {
+  background-color: #1b2a4f;
+  color:  #fff;
+  position: absolute;
+  bottom: -55px;
+  right: 0;
+  width: 150px;
+  border-radius: 8px;
+  height: 42px;
+  font-size: 12px;
+  font-family: lato, 'helvetica-light', 'sans-serif';
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 400;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.payment #card-btn:hover {
+  background-color: #c9b8b8;
+  color: #000
+}
+
+.payment #card-cvc {
+  width: 60px;
+  margin-bottom: 0;
+}
+
+.payment #card-front,
+.payment #card-back {
+  position: absolute;
+  background-color: #498ee4;
+  width: 390px;
+  height: 250px;
+  border-radius: 6px;
+  padding: 20px 30px 0;
+  box-sizing: border-box;
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: 300;
+  color: white;
+}
+
+.payment #card-image {
+  float: right;
+  height: 100%;
+}
+
+.payment #card-image i {
+  font-size: 40px;
+}
+
+.payment #card-month {
+  width: 45% !important;
+}
+
+.payment #card-number,
+.payment #card-holder {
+  width: 100%;
+}
+
+.payment #card-stripe {
+  width: 100%;
+  height: 55px;
+  background-color: #3d5266;
+  position: absolute;
+  right: 0;
+}
+
+.payment #card-success {
+  color: #00b349;
+}
+
+.payment #card-token {
+  display: none;
+}
+
+.payment #card-year {
+  width: 45%;
+  float: right;
+}
+
+.payment #cardholder-container {
+  width: 60%;
+  display: inline-block;
+}
+
+.payment #cvc-container {
+  position: absolute;
+  width: 110px;
+  right: -115px;
+  bottom: -10px;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+
+.payment #cvc-container label {
+  width: 100%;
+}
+
+.payment #cvc-container p {
+  font-size: 6px;
+  text-transform: uppercase;
+  opacity: 0.6;
+  letter-spacing: .5px;
+}
+
+.payment #form-container {
+  margin: auto;
+  width: 500px;
+  height: 290px;
+  position: relative;
+}
+
+.payment #form-errors {
+  color: #eb0000;
+}
+
+.payment #form-errors,
+.payment #card-success {
+  background-color: white;
+  width: 500px;
+  margin: 0 auto 10px;
+  height: 50px;
+  border-radius: 8px;
+  padding: 0 20px;
+  font-weight: 400;
+  box-sizing: border-box;
+  line-height: 46px;
+  letter-spacing: .5px;
+  text-transform: none;
+}
+
+.payment #form-errors p,
+.payment #card-success p {
+  margin: 0 5px;
+  display: inline-block;
+}
+
+.payment #exp-container {
+  margin-left: 10px;
+  width: 32%;
+  display: inline-block;
+  float: right;
+}
+
+.hidden {
+  display: none;
+}
+
+.payment #image-container {
+  width: 100%;
+  position: relative;
+  height: 55px;
+  margin-bottom: 5px;
+  line-height: 55px;
+}
+
+.payment #image-container img {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+input {
+  border: none;
+  outline: none;
+  background-color:#5a9def;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+  margin: 0 0 25px;
+  color: white;
+  font-size: 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-family: lato, 'helvetica-light', 'sans-serif';
+  letter-spacing: .7px;
+}
+
+input::-webkit-input-placeholder {
+  color: #fff;
+  opacity: 0.7;
+  font-family: lato, 'helvetica-light', 'sans-serif';
+   letter-spacing: 1px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  font-size: 10px;
+}
+
+input:-moz-placeholder {
+  color:#fff;
+  opacity: 0.7;
+  font-family: lato, 'helvetica-light', 'sans-serif';
+   letter-spacing: 1px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  font-size: 10px;
+}
+
+input::-moz-placeholder {
+  color: #fff;
+  opacity: 0.7;
+  font-family: lato, 'helvetica-light', 'sans-serif'; 
+  letter-spacing: 1px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  font-size: 10px;
+}
+
+input:-ms-input-placeholder {
+  color: #fff;
+  opacity: 0.7;
+  font-family: lato, 'helvetica-light', 'sans-serif';
+  letter-spacing: 1px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  font-size: 10px;
+}
+
+input.invalid {
+  border: solid 2px #eb0000;
+  height: 34px;
+}
+
+label {
+  display: block;
+  margin: 0 auto 7px;
+}
+
+.payment #shadow {
+  position: absolute;
+  right: 0;
+  width: 284px;
+  height: 214px;
+  top: 36px;
+  background-color: #000;
+  z-index: -1;
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+}
+

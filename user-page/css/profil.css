@@ -1,0 +1,164 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-wrap: wrap;
+  gap: 15px;
+  flex: 1;
+  padding-block: 40px;
+}
+
+.column {
+  flex: 1;
+  max-width: 700px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #3f51b5;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 3px;
+  color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"] {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  /* font-size: 13px;background-color: rgb(28 40 75); */
+}
+
+.gender-group {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.btn-group {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.btn-primary {
+  background: #2196f3;
+  color: #fff;
+}
+.btn-success {
+  background: #4caf50;
+  color: #fff;
+}
+.btn-danger {
+  background: #f44336;
+  color: #fff;
+}
+
+.credit-card {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.credit-card input {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.credit-card input::placeholder {
+  color: #ddd;
+}
+
+.credit-card label {
+  color: #eee;
+  font-size: 13px;
+}
+
+.card-row {
+  display: flex;
+  gap: 8px;
+}
+
+.submit-button {
+  margin-top: 15px;
+  background: #ffffff;
+  color: #333;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+@media screen and (max-width: 768px) {
+  .row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .column {
+    max-width: 95%;
+  }
+}
+
+.profile-image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+  margin-left: 15px;
+}
+
+.profile-image-wrapper img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid #e0e0e0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.profile-image-wrapper img:hover {
+  opacity: 0.85;
+  transform: scale(1.05);
+}
+
+
+  

@@ -1,0 +1,161 @@
+
+/* Colors */
+:root {
+    --dark: #1f2335;
+    --middle: #4371f7;
+    --light: #f4f7ff;
+  }
+  
+  .logoutButton {
+    background: none;
+    border: 0;
+    color: var(--light);
+    cursor: pointer;
+    display: block;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    height: 40px;
+    outline: none;
+    padding: 0 0 0 20px;
+    perspective: 100px;
+    position: relative;
+    text-align: left;
+    width: 130px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .logoutButton::before {
+    background-color: var(--dark);
+    border-radius: 5px;
+    content: '';
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transform: none;
+    transition: transform 50ms ease;
+    width: 100%;
+    z-index: 2;
+  }
+  
+  .logoutButton:hover .door {
+    transform: rotateY(20deg);
+  }
+  
+  .logoutButton:active::before {
+    transform: scale(0.96);
+  }
+  
+  .logoutButton:active .door {
+    transform: rotateY(28deg);
+  }
+  
+  .button-text {
+    color: var(--light);
+    font-weight: 500;
+    position: relative;
+    z-index: 10;
+  }
+  
+  svg {
+    display: block;
+    position: absolute;
+  }
+  
+  .figure {
+    bottom: 5px;
+    fill: var(--middle);
+    right: 18px;
+    width: 30px;
+    z-index: 4;
+  }
+  
+  .door,
+  .doorway {
+    bottom: 4px;
+    fill: var(--light);
+    right: 12px;
+    width: 32px;
+  }
+  
+  .door {
+    transform: rotateY(20deg);
+    transform-origin: 100% 50%;
+    transform-style: preserve-3d;
+    transition: transform 200ms ease;
+    z-index: 5;
+  }
+  
+  .door path {
+    fill: var(--middle);
+    stroke: var(--middle);
+    stroke-width: 4;
+  }
+  
+  .arm1, .wrist1, .arm2, .wrist2, .leg1, .calf1, .leg2, .calf2 {
+    transition: transform 100ms ease-in-out;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg) scale(0.94);
+    }
+    to {
+      transform: rotate(359deg) scale(0.94);
+    }
+  }
+  
+  @keyframes shake {
+    0% {
+      transform: rotate(-1deg);
+    }
+    50% {
+      transform: rotate(2deg);
+    }
+    100% {
+      transform: rotate(-1deg);
+    }
+  }
+  
+  @keyframes flash {
+    0% {
+      opacity: 0.4;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  
+  /* Wrapper styles */
+  html, body {
+    height: 100%;
+  }
+  
+  body {
+    align-items: center;
+    background: var(--light);
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  body .background {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: 50%;
+  }
+  
+  body .background--light {
+    background: var(--light);
+  }
+  
+  body button {
+    margin: 20px;
+  }
+
+  

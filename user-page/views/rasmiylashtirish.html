@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rasmiylashtirish</title>
+
+   <link rel="stylesheet" href="rasmiy.css">
+</head>
+<body ng-app="ba3-angularmaterial-googlemaps-location" ng-cloak>
+   
+        <!-- Asosiy sahifa -->
+        <div id="main-page">
+            <div class="header">Olish usuli</div>
+            
+            <div class="section">
+                <div class="section-title">Yetkazib berish usuli</div>
+                
+                <div class="option" id="delivery-point-option">
+                    <label class="option-label">
+                        <input type="radio" name="delivery-method" value="point" checked>
+                        <span>Topshirish punkti</span>
+                    </label>
+                    <span class="option-price">5 000 sớm</span>
+                </div>
+                
+                <div class="option" id="courier-option">
+                    <label class="option-label">
+                        <input type="radio" name="delivery-method" value="courier">
+                        <span>Kuryer</span>
+                    </label>
+                    <span class="option-price">30 000 sớm</span>
+                </div>
+            </div>
+            
+            <div class="section" id="delivery-info">
+                <div class="section-title">
+                    <span>Topshirish punkti tanlandi</span>
+                </div>
+                
+                <div class="input-group">
+                    <div><strong>Oluvchi</strong></div>
+                    <div>Izziyeva Kurnush +998 90 438 51 14</div>
+                </div>
+                
+                <div class="input-group" id="point-info">
+                    <div><strong>Topshirish punkti</strong></div>
+                    <div>Asosiy topshirish punkti, Navoiy ko'chasi 23, Toshkent</div>
+                    <div>Ish vaqtlari: 09:00 - 20:00</div>
+                </div>
+                
+                <div class="input-group hidden" id="address-info">
+                    <div><strong>Yetkazib berish manzili</strong></div>
+                    <div id="selected-address">Manzil tanlanmagan</div>
+                </div>
+                
+                <button class="btn" id="change-delivery-btn">O'zgartirish</button>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Yetkazib berish vaqti</div>
+                <div>10 may</div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">To'lov turi</div>
+                
+                <div class="checkbox-option">
+                    <input type="checkbox" id="installment" name="payment" value="installment">
+                    <label for="installment">Muddatiy to'lovga</label>
+                </div>
+                <div style="font-size: 12px; color: #666; margin-left: 25px; margin-bottom: 15px;">
+                    35 000 so'mdan boshlangan buyurtmalarga amal qiladi
+                </div>
+                
+                <div class="checkbox-option">
+                    <input type="checkbox" id="cash" name="payment" value="cash" checked>
+                    <label for="cash">Olinganda to'lanadi</label>
+                </div>
+                <div style="font-size: 12px; color: #666; margin-left: 25px; margin-bottom: 15px;">
+                    Kuryerga - faqat naqd pulda yoki QR kod orqali, topshirish punktlarida - naqd pul va karta orqali
+                </div>
+                
+                <div class="checkbox-option">
+                    <input type="checkbox" id="online" name="payment" value="online">
+                    <label for="online">Karta orqali onlayn</label>
+                </div>
+                <div class="payment-methods">
+                    <span class="payment-method">UZCARD</span>
+                    <span class="payment-method">HUMO</span>
+                    <span class="payment-method">Visa</span>
+                    <span class="payment-method">MasterCard</span>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Sizning buyurtmangiz</div>
+                <table class="order-summary">
+                    <tr>
+                        <td>Tovarlar</td>
+                        <td style="text-align: right;">5 000 sớm</td>
+                    </tr>
+                    <tr>
+                        <td>Yetkazib berish</td>
+                        <td style="text-align: right;" id="delivery-price">5 000 sớm</td>
+                    </tr>
+                    <tr>
+                        <td class="total">Jami</td>
+                        <td class="total" style="text-align: right;" id="total-price">10 000 sớm</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <button class="btn" id="confirm-order-btn">Buyurtmani rasmiylashtirish</button>
+        </div>
+        
+        <!-- Manzil tanlash sahifasi -->
+        <div id="address-page" class="hidden">
+            <div class="header">Buyurtmani qayerga yetkazish kerak?</div>
+            
+            <div class="section">
+                <div class="section-title">Xaritadan yetkazib berish manzilini tanlang</div>
+                <div style="height: 200px; background-color: #eee; border-radius: 8px; display: flex; justify-content: center; align-items: center; margin-bottom: 15px;">
+                    <div ng-controller="PrincipalController">
+        
+
+                        <md-content layout-padding>
+                            <div id="map"></div>
+                        </md-content>
+                    </div>
+                    
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">Shahar, ko'cha, uy*</label>
+                    <input type="text" class="input-field" id="main-address" placeholder="Manzilni kiriting">
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group">
+                            <label class="input-label">Xonadon/ofis</label>
+                            <input type="text" class="input-field" id="apartment" placeholder="Masalan: 42">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input-group">
+                            <label class="input-label">Yo'lak</label>
+                            <input type="text" class="input-field" id="entrance" placeholder="Masalan: 1">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group">
+                            <label class="input-label">Qavat</label>
+                            <input type="text" class="input-field" id="floor" placeholder="Masalan: 3">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input-group">
+                            <label class="input-label">Domaqon</label>
+                            <input type="text" class="input-field" id="doorcode" placeholder="Masalan: 12A">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">Kuryer uchun izoh</label>
+                    <textarea class="notes-input" id="delivery-notes" placeholder="Masalan: yetkazishdan oldin qo'ng'iroq qiling, eshik oldida kutaman yoki hokazo"></textarea>
+                </div>
+                
+                <button class="btn" id="save-address-btn">Manzilni saqlash</button>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Saqlangan manzillar</div>
+                
+                <div class="address-card" data-address="Asosiy topshirish punkti, Navoiy ko'chasi 23, Toshkent">
+                    <div class="address-title">Topshirish punkti <span class="current-icon">●</span></div>
+                    <div>Asosiy topshirish punkti, Navoiy ko'chasi 23, Toshkent</div>
+                    <div>Ish vaqtlari: 09:00 - 20:00</div>
+                </div>
+                
+                <div class="address-card" data-address="Toshkent shahar, Yunusobod tumani, 12-uy, 45-xonadon, 3-qavat">
+                    <div class="address-title">Uy manzili</div>
+                    <div>Toshkent shahar, Yunusobod tumani, 12-uy, 45-xonadon, 3-qavat</div>
+                </div>
+            </div>
+        </div>
+    
+
+ 
+</body>
+<!-- AngularJS Core -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+<!-- AngularJS Messages -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-messages.min.js"></script>
+
+<!-- AngularJS Aria (ngMaterial uchun kerak) -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-aria.min.js"></script>
+
+<!-- AngularJS Animate (ngMaterial uchun kerak) -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.min.js"></script>
+
+<!-- Angular Material JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.2/angular-material.min.js"></script>
+
+<!-- Angular Material CSS -->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.2/angular-material.min.css">
+
+<!-- Google Maps API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5tGuetQPZat9QMcDpDhGLhJ5WBTM6t-Y"></script> <!-- API kalitini bu yerga qo'ying -->
+
+<!-- Main AngularJS Script -->
+<script src="rasmiy.js"></script> <!-- Bu yerda sizning angular kod faylingiz -->
+
+
+
+<script>
+    // DOM elementlari
+    const mainPage = document.getElementById('main-page');
+    const addressPage = document.getElementById('address-page');
+    const deliveryPointOption = document.getElementById('delivery-point-option');
+    const courierOption = document.getElementById('courier-option');
+    const pointInfo = document.getElementById('point-info');
+    const addressInfo = document.getElementById('address-info');
+    const changeDeliveryBtn = document.getElementById('change-delivery-btn');
+    const deliveryPrice = document.getElementById('delivery-price');
+    const totalPrice = document.getElementById('total-price');
+    const selectedAddress = document.getElementById('selected-address');
+    const saveAddressBtn = document.getElementById('save-address-btn');
+    const addressCards = document.querySelectorAll('.address-card');
+    
+    // Yetkazib berish usulini tanlash
+    document.querySelectorAll('input[name="delivery-method"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value === 'point') {
+                pointInfo.classList.remove('hidden');
+                addressInfo.classList.add('hidden');
+                deliveryPrice.textContent = '5 000 sớm';
+                totalPrice.textContent = '10 000 sớm';
+                document.querySelector('#delivery-info .section-title span').textContent = 'Topshirish punkti tanlandi';
+            } else {
+                pointInfo.classList.add('hidden');
+                addressInfo.classList.remove('hidden');
+                deliveryPrice.textContent = '30 000 sớm';
+                totalPrice.textContent = '35 000 sớm';
+                document.querySelector('#delivery-info .section-title span').textContent = 'Kuryer tanlandi';
+            }
+        });
+    });
+    
+    // O'zgartirish tugmasi
+    changeDeliveryBtn.addEventListener('click', function() {
+        mainPage.classList.add('hidden');
+        addressPage.classList.remove('hidden');
+    });
+    
+    // Manzil tanlash
+    addressCards.forEach(card => {
+        card.addEventListener('click', function() {
+            // Barcha tanlangan belgilarni olib tashlash
+            document.querySelectorAll('.current-icon').forEach(icon => {
+                icon.style.display = 'none';
+            });
+            
+            // Joriy manzilni tanlash
+            this.querySelector('.current-icon').style.display = 'inline';
+            
+            // Asosiy sahifaga qaytish
+            setTimeout(() => {
+                mainPage.classList.remove('hidden');
+                addressPage.classList.add('hidden');
+                
+                // Tanlangan manzilni ko'rsatish
+                const address = this.getAttribute('data-address');
+                selectedAddress.textContent = address;
+                
+                // Agar topshirish punkti tanlangan bo'lsa
+                if (this.textContent.includes('Topshirish punkti')) {
+                    document.querySelector('input[value="point"]').checked = true;
+                    pointInfo.classList.remove('hidden');
+                    addressInfo.classList.add('hidden');
+                    deliveryPrice.textContent = '5 000 sớm';
+                    totalPrice.textContent = '10 000 sớm';
+                    document.querySelector('#delivery-info .section-title span').textContent = 'Topshirish punkti tanlandi';
+                } else {
+                    document.querySelector('input[value="courier"]').checked = true;
+                    pointInfo.classList.add('hidden');
+                    addressInfo.classList.remove('hidden');
+                    deliveryPrice.textContent = '30 000 sớm';
+                    totalPrice.textContent = '35 000 sớm';
+                    document.querySelector('#delivery-info .section-title span').textContent = 'Kuryer tanlandi';
+                }
+            }, 300);
+        });
+    });
+    
+    // Yangi manzilni saqlash
+    saveAddressBtn.addEventListener('click', function() {
+        const mainAddress = document.getElementById('main-address').value;
+        if (!mainAddress) {
+            alert('Iltimos, asosiy manzilni kiriting!');
+            return;
+        }
+        
+        // Yangi manzil kartasini yaratish
+        const newCard = document.createElement('div');
+        newCard.className = 'address-card';
+        newCard.setAttribute('data-address', mainAddress);
+        newCard.innerHTML = `
+            <div class="address-title">Yangi manzil <span class="current-icon">●</span></div>
+            <div>${mainAddress}</div>
+        `;
+        
+        // Saqlangan manzillar ro'yxatiga qo'shish
+        document.querySelector('#address-page .section:last-child').prepend(newCard);
+        
+        // Yangi manzilni tanlash
+        newCard.addEventListener('click', function() {
+            document.querySelectorAll('.current-icon').forEach(icon => {
+                icon.style.display = 'none';
+            });
+            this.querySelector('.current-icon').style.display = 'inline';
+            
+            // Asosiy sahifaga qaytish
+            setTimeout(() => {
+                mainPage.classList.remove('hidden');
+                addressPage.classList.add('hidden');
+                
+                // Tanlangan manzilni ko'rsatish
+                const address = this.getAttribute('data-address');
+                selectedAddress.textContent = address;
+                
+                // Kuryer usulini tanlash
+                document.querySelector('input[value="courier"]').checked = true;
+                pointInfo.classList.add('hidden');
+                addressInfo.classList.remove('hidden');
+                deliveryPrice.textContent = '30 000 sớm';
+                totalPrice.textContent = '35 000 sớm';
+                document.querySelector('#delivery-info .section-title span').textContent = 'Kuryer tanlandi';
+            }, 300);
+        });
+        
+        alert('Manzil muvaffaqiyatli saqlandi!');
+    });
+    
+    // Buyurtmani tasdiqlash
+    document.getElementById('confirm-order-btn').addEventListener('click', function() {
+        const deliveryMethod = document.querySelector('input[name="delivery-method"]:checked').value;
+        const address = deliveryMethod === 'point' 
+            ? document.querySelector('#point-info div:nth-child(2)').textContent 
+            : selectedAddress.textContent;
+        
+        if (deliveryMethod === 'courier' && address === 'Manzil tanlanmagan') {
+            alert('Iltimos, yetkazib berish manzilini tanlang!');
+            return;
+        }
+        
+        alert(`Buyurtma qabul qilindi!\nYetkazib berish usuli: ${deliveryMethod === 'point' ? 'Topshirish punkti' : 'Kuryer'}\nManzil: ${address}\nJami: ${totalPrice.textContent}`);
+    });
+</script>
+
+</html>
+

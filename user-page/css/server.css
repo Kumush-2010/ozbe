@@ -1,0 +1,148 @@
+body {
+  height: 100vh;
+  background-color: #f4f6f9;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+}
+
+.header {
+  height: 14vh;
+  background-color: rgb(28 40 75);
+}
+
+.wrapper {
+  display: flex;
+  height: 86vh;
+}
+
+.sidebar {
+  background-color: #fff;
+  padding: 1rem;
+  border-right: 1px solid #e5e5e5;
+  width: 400px;
+  position: sticky;
+}
+
+.sidebar a {
+  display: block;
+  padding: 0.75rem;
+  color: #111;
+  text-decoration: none;
+  border-radius: 0.375rem;
+  margin-bottom: 0.5rem;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+  background-color: #00bcd4;
+  color: white;
+}
+
+.content {
+  padding: 1rem;
+}
+
+.card-summary {
+  border-radius: 1rem;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-icon {
+  font-size: 1.5rem;
+}
+
+.chart-container {
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+.canvas {
+  width: 100%;
+  height: 100%;
+}
+#configBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  font-size: 24px;
+  background-color: #11cdef;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.configurator {
+  position: fixed;
+  top: 0;
+  right: -350px;
+  width: 300px;
+  height: 100%;
+  background: white;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  transition: right 0.3s ease-in-out;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.configurator.show {
+  right: 0;
+}
+
+.config-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.color-options {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.color-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  border: 2px solid #ddd;
+}
+
+.typeBtn {
+  padding: 5px 10px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.typeBtn.active {
+  background: #11cdef;
+  color: white;
+}
+
+.btn.primary {
+  background: #11cdef;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.btn.dark {
+  background: #344767;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  cursor: pointer;
+}
