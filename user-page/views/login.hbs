@@ -1,29 +1,26 @@
 
-<!DOCTYPE html>
+
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width-device-width, initial-scale-1.0">
-  <link rel="stylesheet" href="/user-page/css/login.css">
-  <title>Log In Page</title>
-</head>
+ <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/user-page/css/login.css" />
+    <title>Log In Page</title>
+  </head>
 
 <body>
   <div class="login-box">
     <h2>Log In</h2>
-    <form>
+   <form action="/login" method="POST">
       <div class="user-box">
-        <input id="username" type="text" name="username" placeholder="Username" required />
+        <input id="phone" type="text" name="phone" placeholder="Phone" required />
       </div>
 
       <div class="user-box">
         <input type="password" id="pwd" name="pwd" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=*[A-Z]).{8,}" minlength="8" maxlength="15" required />
       </div>
-
-      <!-- <div class="forgot-password">
-        <p><a class="forgot-password-link" target="_blank" href="forgot_password.html">forgot password?</a></p>
-      </div> -->
+ 
 
       <button class="submit">
         <span></span>
@@ -33,10 +30,13 @@
         Submit
       </button>
 
+<div class="sign-up">
+        <p>Don't have an account? <a class="sign-up-link" target="_blank" href="/register"><strong>Sign Up</strong></a></p>
+      </div>
     </form>
   </div>
 </body>
 
-<script src="login.js"></script>
+{{!-- <script src="login.js"></script> --}}
 </html>
 

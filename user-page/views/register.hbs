@@ -1,0 +1,44 @@
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/user-page/css/register.css">
+  <title>{{title}}</title>
+</head>
+
+<body>
+  <div class="signup-box">
+    <h2>Sign Up</h2>
+    <form action="/register" method="POST">
+      <div class="user-box">
+        <input id="username" type="text" name="username" placeholder="Username" required />
+      </div>
+
+      <div class="user-box">
+        <input id="phone" type="text" name="phone" placeholder="Phone" required />
+      </div>
+
+      <div class="user-box">
+        <input type="password" id="pwd" name="pwd" placeholder="Password"
+          pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" minlength="8" maxlength="15" required />
+      </div>
+
+      <button type="submit" class="submit">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Submit
+      </button>
+
+      <div class="log-in">
+        <p>Already have an account? <a class="log-in-link" href="/login"><strong>Log In</strong></a></p>
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>

@@ -9,10 +9,11 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
 const session = require("express-session");
-const connectDB = require("./config/db");
-const Router = require('./app');
-const { jwtAccessMiddleware } = require("./middleware/jwt-access.middleware");
-const cors = require('cors')
+const connectDB = require("./database/db");
+const Router = require('./router/router');
+const { jwtAccessMiddleware } = require("./middlewares/jwt-access.middleware");
+const cors = require('cors');
+const router = require("./router/router");
 
 connectDB();
 
@@ -35,18 +36,18 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
 app.use(flash());
-app.use(express.static("adminpage")); 
+app.use(express.static("user-page")); 
 
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "./user-page/views"); 
-app.use(session({ secret: "Admin", resave: false, saveUninitialized: false }));
+app.use(session({ secret: "User", resave: false, saveUninitialized: false }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/user-page', express.static(path.join(__dirname, '/user-page')));
 
 
 
-
-app.use("/", Router);
+app.use("/", router);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

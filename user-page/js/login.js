@@ -23,3 +23,16 @@ loginBtn.addEventListener('click', (e) => {
 } 
 
 );
+
+
+const phoneInput = document.getElementById('phone');
+const passwordInput = document.getElementById('password');
+const submitBtn = document.querySelector('.submit');
+
+submitBtn.addEventListener('click', async (e) => {
+  e.preventDefault();
+  console.log('Login tugmasi bosildi');
+
+  const phone = phoneInput.value.trim();
+  const password = passwordInput.value;
+})
