@@ -13,7 +13,9 @@ const userSchema = new mongoose.Schema({
     card: { type: String },
     cart: { type: String },
     image: { type: String },
-    birth: { type: Date },
+    birth: { type: String },
+    gender: { type: String, enum: ['ayol', 'erkak'],},
+    card: { type: mongoose.Schema.Types.ObjectId, ref: "Card" },
 }, { timestamps: true });
 
 // Parolni hash qilish (register paytida)

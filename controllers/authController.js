@@ -53,7 +53,7 @@ if (!isMatch) {
 
 
     // res.status(200).json({ message: "Muvaffaqiyatli kirdingiz", user });
-    return res.redirect('/user')
+    return res.redirect('/profil')
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Serverda xatolik" });

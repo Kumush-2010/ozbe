@@ -10,7 +10,6 @@ const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
 const session = require("express-session");
 const connectDB = require("./database/db");
-const Router = require('./router/router');
 const { jwtAccessMiddleware } = require("./middlewares/jwt-access.middleware");
 const cors = require('cors');
 const router = require("./router/router");
@@ -43,6 +42,7 @@ app.set("view engine", "hbs");
 app.set("views", "./user-page/views"); 
 app.use(session({ secret: "User", resave: false, saveUninitialized: false }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/user-page', express.static(path.join(__dirname, '/user-page')));
 
 
