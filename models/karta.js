@@ -5,7 +5,7 @@ const cardSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", index: true },
   cardHolder: { type: String },
   cardNumber: { type: Number },
-  expiry: { type: Date },
+  expiry: { type: String },
   cvv: { type: Number }
 })
 

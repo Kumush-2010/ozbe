@@ -191,14 +191,5 @@ document.getElementById('payBtn').addEventListener('click', async function () {
   }
 });
 
-fetch('/card')
-  .then(response => response.json())
-  .then(data => {
-    console.log('Maʼlumotlar:', data);
-    // Masalan, sahifaga chiqarish:
-    document.getElementById('cardHolder').value = data.cardHolder;
-  })
-  .catch(error => {
-    console.error('Xatolik:', error);
-  });
+
 

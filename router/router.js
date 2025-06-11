@@ -1,6 +1,7 @@
 
 const router = require('express').Router();
 const { login, loginPage, registerPage, register } = require("../controllers/authController");
+const { home, shop } = require('../controllers/pagesController');
 const { profilPage, profil, updateProfile, card, cardPage } = require('../controllers/profilController');
 const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
@@ -22,10 +23,6 @@ router
     '/register',
     register
 )
-// .get(
-//     '/profil',
-//     profilPage
-// )
 .get(
     '/profil',
     profil
@@ -35,13 +32,19 @@ router
     upload.single('image'),
     updateProfile
 )
-.get(
-    '/card',
-    cardPage
-)
 .post(
     '/card',
     card
 )
+.get(
+    '/home',
+    home
+)
+.get(
+    '/shop',
+    shop
+)
+
+
 
 module.exports = router

@@ -10,7 +10,6 @@ const userSchema = new mongoose.Schema({
     address: { type: String },
     role: { type: String, enum: ["user"], default: "user" },
     lastLogin: { type: Date, default: Date.now },
-    card: { type: String },
     cart: { type: String },
     image: { type: String },
     birth: { type: String },

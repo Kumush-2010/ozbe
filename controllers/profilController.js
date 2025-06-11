@@ -4,9 +4,6 @@ const { createClient } = require('@supabase/supabase-js');
 require("dotenv").config();
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
-exports.profilPage = (req, res) => {
-    return res.render('profil', { layout: false });
-}
 
 exports.profil = async (req, res) => {
      const userId = req.cookies.userId;
@@ -15,10 +12,10 @@ exports.profil = async (req, res) => {
   }
 
   try {
-    const user = await User.findById(userId).select('-password');
+    const user = await User.findById(userId).select('-password').populate('card').exec();
+    // console.log(user.card);
     if (!user) return res.status(404).json({ message: "User topilmadi" });
 
-    // ✅ user obyektini view’ga uzatyapmiz:
     return res.render('profil', {
       layout: false,
       user
@@ -83,37 +80,32 @@ exports.updateProfile = async (req, res) => {
   }
 };
 
-exports.cardPage = async (req, res) => {
-     const userId = req.cookies.userId;
-  if (!userId) {
-    return res.status(401).json({ message: "ID topilmadi. Iltimos, qayta login qiling." });
-  }
-
-  try {
-    const card = await Card.findById(userId).select('-password');
-    if (!card) return res.status(404).json({ message: "Karta topilmadi" });
-
-    return res.render('profil', {
-      layout: false,
-      card
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Serverda xatolik yuz berdi" });
-  }
-}
-
 
 exports.card = async (req, res) => {
+  try {
     const { userId, cardNumber, cardHolder, expiry, cvv } = req.body;
 
-    const card = Card.create({
-        userId,
-        cardNumber,
-        cardHolder,
-        expiry,
-        cvv
-    })
+    const user = await User.findById(userId).populate("card");
 
-  return res.json({ success: true, message: "Karta ma'lumotlari saqlandi", data: card });
-}
+    if (!user || !user.card) {
+      return res.status(404).json({ success: false, message: "Karta topilmadi" });
+    }
+
+    // Karta maydonlarini yangilaymiz
+    const card = await Card.findByIdAndUpdate(
+      user.card._id,
+      { cardNumber, cardHolder, expiry, cvv },
+      { new: true }
+    );
+
+    return res.json({
+      success: true,
+      message: "Karta ma'lumotlari yangilandi",
+      data: card
+    });
+
+  } catch (error) {
+    console.error("❌ Karta yangilashda xatolik:", error);
+    return res.status(500).json({ success: false, message: "Server xatosi", error: error.message });
+  }
+};
