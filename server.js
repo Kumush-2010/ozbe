@@ -43,6 +43,7 @@ app.set("views", "./user-page/views");
 app.use(session({ secret: "User", resave: false, saveUninitialized: false }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
+// app.use('/user-page/views', express.static(path.join(__dirname, 'views')))
 app.use('/user-page', express.static(path.join(__dirname, '/user-page')));
 
 

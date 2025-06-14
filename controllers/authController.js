@@ -60,6 +60,17 @@ if (!isMatch) {
   }
 };
 
+exports.checkAuth = (req, res) => {
+  const token = req.cookies.token;
+  if (!token) return res.json({ loggedIn: false });
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    return res.json({ loggedIn: true, user: decoded });
+  } catch (err) {
+    return res.json({ loggedIn: false });
+  }
+};
 exports.registerPage = (req, res) => {
   return res.render('register', { layout: false });
 }

@@ -1,8 +1,9 @@
 
 const router = require('express').Router();
-const { login, loginPage, registerPage, register } = require("../controllers/authController");
+const { login, loginPage, registerPage, register, checkAuth } = require("../controllers/authController");
 const { home, shop } = require('../controllers/pagesController');
 const { profilPage, profil, updateProfile, card, cardPage } = require('../controllers/profilController');
+const { getAllProducts } = require('../controllers/productConstroller')
 const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -15,6 +16,8 @@ router
     '/login',
     login
 )
+// 👇 Bu biz qo‘shgan yangi route:
+.get('/check-auth', checkAuth)
 .get(
     '/register',
     registerPage
@@ -44,7 +47,10 @@ router
     '/shop',
     shop
 )
-
+.get(
+    '/products',
+    getAllProducts
+)
 
 
 module.exports = router

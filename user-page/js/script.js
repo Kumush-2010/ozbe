@@ -9,7 +9,7 @@ let gallerySlider = new Swiper('.gallery-slider', {
      nextEl: '.swiper-button-next',
      prevEl: '.swiper-button-prev',
   },
-  loop: true,
+  loop: false,
   effect: 'coverflow',
   centeredSlides: true,
   slidesPerView: 3,

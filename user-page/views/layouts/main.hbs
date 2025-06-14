@@ -62,7 +62,31 @@
     </div>
 
 {{{body}}}
+<!-- HTML tugma (masalan, header yoki navbar ichida) -->
+<button id="authButton" style="padding: 8px 16px; cursor: pointer;">Tekshirilmoqda...</button>
 
+<script>
+  const authBtn = document.getElementById('authButton');
+
+  window.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const res = await fetch('/check-auth');
+      const data = await res.json();
+
+      if (data.loggedIn) {
+        authBtn.textContent = 'Profil';
+        authBtn.onclick = () => window.location.href = '/profil';
+      } else {
+        authBtn.textContent = 'Login';
+        authBtn.onclick = () => window.location.href = '/login';
+      }
+    } catch (err) {
+      console.error('Xatolik:', err);
+      authBtn.textContent = 'Login';
+      authBtn.onclick = () => window.location.href = '/login';
+    }
+  });
+</script>
     <script src="/user-page/js/profil.js"></script>
     <script src="/user-page/js/profil2.js"></script>
     <script src="/user-page/js/script.js"></script>
