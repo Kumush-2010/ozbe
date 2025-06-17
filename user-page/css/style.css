@@ -300,66 +300,71 @@ h6 {
 }
 
 /* swiper */
-.slide {
-  overflow: hidden;
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
 }
-.gallery-slide {
-  display: block;
-  width: 80%;
-  height: 630px;
-  padding: 0;
+
+
+.custom-slider {
+  width: 100%;
+  padding: 40px 0;
+}
+
+.custom-slide {
+  position: relative;
   border-radius: 12px;
   overflow: hidden;
-  filter: blur(4px);
+  height: 650px; /* cho'zildi */
+  width: 85%;     /* eni biroz qisqartirildi */
+  max-width: 400px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background: #000;
 }
-.gallery-slide img {
+
+
+.custom-slide img {
+  position: absolute;
+  top: 0; left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 1;
+  filter: brightness(0.7);
 }
-.gallery-slide.swiper-slide-active {
-  filter: none;
+
+.slide-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  padding: 20px;
+  text-align: center;
 }
-.gallery-slider.swiper-actions {
-  display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-.gallery-slider {
-  width: 100%;
-  overflow: visible;
-}
-.gallery-slider .swiper-btn {
-  position: static;
-  height: 22px;
-  margin: 0;
-}
-.gallery-slider .swiper-btn:after {
+
+.slide-content h3 {
   font-size: 22px;
-  color: #fff;
+  margin-bottom: 10px;
 }
-.gallery-slider .swiper-pagination {
-  position: static;
-    width: fit-content;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    /* position: absolute; */
-    text-align: center;
-    transition: .3s opacity;
-    transform: translate3d(0, 0, 0);
-    z-index: 10;
+
+.slide-content button {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s;
 }
-.gallery-slider .swiper-pagination-bullet {
-  width: 14px;
-  height: 4px;
-  border-radius: 3px;
-  margin: 0 !important;
+
+.slide-content button:hover {
+  background: white;
+  color: #000;
 }
-.gallery-slider .swiper-pagination-bullet.swiper-pagination-bullet-active {
-  background-color: #fff;
-}
+
 
 /* category */
 .acc-wraper {
@@ -399,61 +404,63 @@ h6 {
   object-fit: cover;
 }
 
-/* svejiylaridan */
-.swiper {
+/* svejiylari */
+.productSwiper {
   width: 100%;
-  height: 100%;
+  padding: 20px 0;
 }
 
-.fresh .swiper-wrapper .swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  /* background: #fff; */
+.productSwiper .swiper-wrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  margin: 0;
+  align-items: stretch;
 }
 
-.fresh .swiper-slide img {
-  display: block;
-  width: 90%;
-  height: 100%;
+.productSwiper .swiper-slide {
+  /* background-color: #fff; */
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+  padding-bottom: 10px;
+  width: 250px;
+  height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.productSwiper .swiper-slide img {
+  width: 100%;
+  height: 70%;
   object-fit: cover;
-  border-radius: 12px;
-  border-top-right-radius: 50%; 
   border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+}
+
+.productSwiper .swiper-slide h3 {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #333;
 }
 
 .actions {
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 60px;
+  align-items: center;
+  gap: 40px;
+  margin-top: 20px;
 }
 
-.mySwiper .swiper-pagination {
-  width: 100%;
-  height: 2.5%;
-  text-align: center;
-}
-
-.mySwiper .swiper-btn {
+.productSwiper .swiper-btn {
   cursor: pointer;
-  transition: transform 0.2s;
-}
-.mySwiper .swiper-btn:hover {
-  transform: scale(1.2);
 }
 
-.mySwiper .swiper-btn {
-  position: static;
-  height: 22px;
-  margin: 0;
-}
-.mySwiper .swiper-btn:after {
-  font-size: 22px;
-  color: #fff;
+.productSwiper .swiper-btn:after {
+  font-size: 20px;
+  color: #333;
 }
 
+.productSwiper .swiper-pagination {
+  position: relative;
+  bottom: auto;
+}

@@ -5,6 +5,7 @@ const { home, shop } = require('../controllers/pagesController');
 const { profilPage, profil, updateProfile, card, cardPage } = require('../controllers/profilController');
 const { getAllProducts } = require('../controllers/productConstroller')
 const multer = require("multer");
+const { getAllCategories } = require('../controllers/categoryController');
 const upload = multer({ storage: multer.memoryStorage() });
 
 router
@@ -50,6 +51,10 @@ router
 .get(
     '/products',
     getAllProducts
+)
+.get(
+    '/category',
+    getAllCategories
 )
 
 
