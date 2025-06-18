@@ -405,62 +405,91 @@ h6 {
 }
 
 /* svejiylari */
-.productSwiper {
+/* Swiper container */
+.swiper {
   width: 100%;
-  padding: 20px 0;
+  height: 100%;
 }
 
-.productSwiper .swiper-wrapper {
-  display: flex;
-  align-items: stretch;
-}
-
-.productSwiper .swiper-slide {
-  /* background-color: #fff; */
-  border-radius: 0 0 12px 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+.fresh .swiper-wrapper .swiper-slide {
   text-align: center;
-  padding-bottom: 10px;
-  width: 250px;
-  height: 420px;
+  font-size: 18px;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.product-card {
+  width: 70%;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  align-items: center;
+  border-top-left-radius: 48%;
+  border-top-right-radius: 48%;
 }
 
-.productSwiper .swiper-slide img {
-  width: 100%;
-  height: 70%;
+.product-card img {
+  /* width: 70%; */
+  height: 400px;
   object-fit: cover;
-  border-top-left-radius: 50%;
-  border-top-right-radius: 50%;
+  border-top-left-radius: 48%;
+  border-top-right-radius: 48%;
 }
 
-.productSwiper .swiper-slide h3 {
-  margin-top: 10px;
+.product-info {
+  padding: 10px;
+}
+
+.product-info h3 {
+  margin: 10px 0 5px;
   font-size: 1rem;
   color: #333;
 }
 
+.product-info p {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 5px;
+}
+
+.product-info .price {
+  font-weight: bold;
+  color: #27ae60;
+  font-size: 1rem;
+}
+
 .actions {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 40px;
-  margin-top: 20px;
+  justify-content: center;
+  gap: 60px;
 }
 
-.productSwiper .swiper-btn {
+.mySwiper .swiper-pagination {
+  width: 100%;
+  height: 2.5%;
+  text-align: center;
+}
+
+.mySwiper .swiper-btn {
   cursor: pointer;
+  transition: transform 0.2s;
+  position: static;
+  height: 22px;
+  margin: 0;
 }
 
-.productSwiper .swiper-btn:after {
-  font-size: 20px;
-  color: #333;
+.mySwiper .swiper-btn:hover {
+  transform: scale(1.2);
 }
 
-.productSwiper .swiper-pagination {
-  position: relative;
-  bottom: auto;
+.mySwiper .swiper-btn::after {
+  font-size: 22px;
+  color: #fff;
 }
