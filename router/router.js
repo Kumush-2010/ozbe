@@ -1,7 +1,7 @@
 
 const router = require('express').Router();
 const { login, loginPage, registerPage, register, checkAuth } = require("../controllers/authController");
-const { home, shop } = require('../controllers/pagesController');
+const { home, shop, contact, details } = require('../controllers/pagesController');
 const { profilPage, profil, updateProfile, card, cardPage } = require('../controllers/profilController');
 const { getAllProducts } = require('../controllers/productConstroller')
 const multer = require("multer");
@@ -56,6 +56,13 @@ router
     '/category',
     getAllCategories
 )
-
+.get(
+    '/contact',
+    contact
+)
+.get(
+    '/details',
+    details
+)
 
 module.exports = router

@@ -374,122 +374,116 @@ h6 {
 
 .accordion {
   display: flex;
-  flex-flow: row;
-  flex-wrap: nowrap;
+  flex-flow: row nowrap;
   overflow: hidden;
   width: 120%;
   height: 800px;
+  /* gap: 10px; */
 }
 
 .accordion > div {
-  /* width:100%; */
   height: 700px;
   flex-grow: 1;
   flex-shrink: 1;
-  /*   min-heihgt: 40px; */
   overflow: hidden;
   transition: all 0.5s ease;
   position: relative;
   border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+   max-width: 400px;
+   min-width: 100px;
 }
 
 .accordion > div:hover {
+  flex-grow: 5;
   flex-shrink: 0;
 }
 
 .accordion div img {
-  width: 400px;
-  /* width: 99%; */
+  width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.5s ease;
 }
+
+/* Zoom effekt (ixtiyoriy) */
+.accordion > div:hover img {
+  transform: scale(1.05);
+}
+
+/* Matn */
+.accordion div p {
+  position: absolute;
+  z-index: 2;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+  writing-mode: vertical-rl;
+  transform: translate(-50%, -50%) rotate(180deg);
+  left: 50%;
+  top: 50%;
+  transition: all 0.3s ease;
+}
+
+/* Hover holatda: matn yotiq bo‘ladi */
+.accordion > div:hover p {
+  writing-mode: horizontal-tb;
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
 
 /* svejiylari */
 /* Swiper container */
-.swiper {
-  width: 100%;
-  height: 100%;
-}
-
-.fresh .swiper-wrapper .swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-}
-
 .product-card {
-  width: 70%;
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 350px;
+  height: 460px;
+  /* background: #fff; */
+  border-radius: 60% 60% 20px 20px;
+  /* box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); */
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-top-left-radius: 48%;
-  border-top-right-radius: 48%;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.product-card:hover {
+  transform: translateY(-10px) scale(1.05); /* 🖱 Hover effekti */
 }
 
 .product-card img {
-  /* width: 70%; */
-  height: 400px;
+  height: 380px;
+  width: 100%;
   object-fit: cover;
-  border-top-left-radius: 48%;
-  border-top-right-radius: 48%;
+  border-top-left-radius: 60%;
+  border-top-right-radius: 60%;
+  border-bottom-left-radius: 3%;
+  border-bottom-right-radius: 3%;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.08) rotate(-1deg); /* 🌀 Animatsiya */
 }
 
 .product-info {
-  padding: 10px;
+  padding: 16px 4px;
+  text-align: center;
 }
 
 .product-info h3 {
-  margin: 10px 0 5px;
-  font-size: 1rem;
-  color: #333;
-}
-
-.product-info p {
-  font-size: 0.9rem;
-  color: #777;
-  margin-bottom: 5px;
+  margin: 2px 0;
+  font-size: 0.8rem;
+  color: #fff;
+  line-height: 1.2;
 }
 
 .product-info .price {
   font-weight: bold;
-  color: #27ae60;
-  font-size: 1rem;
-}
-
-.actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 60px;
-}
-
-.mySwiper .swiper-pagination {
-  width: 100%;
-  height: 2.5%;
-  text-align: center;
-}
-
-.mySwiper .swiper-btn {
-  cursor: pointer;
-  transition: transform 0.2s;
-  position: static;
-  height: 22px;
-  margin: 0;
-}
-
-.mySwiper .swiper-btn:hover {
-  transform: scale(1.2);
-}
-
-.mySwiper .swiper-btn::after {
-  font-size: 22px;
   color: #fff;
+  font-size: 0.8rem;
 }

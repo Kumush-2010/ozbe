@@ -6,7 +6,7 @@
     <title>Shop</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+      <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/user-page/css/shop.css">
     <link rel="stylesheet" href="/user-page/css/style.css">
     <link rel="stylesheet" href="/user-page/css/search.css">
@@ -24,8 +24,7 @@
     <ul class="nav-links nav nav-underline">
       <a href="/home" class="logo"><img src="images/logo.png" class="logo" alt="" /></a>
       <li class="nav-item"><a class="nav-link active" href="/home">Asosiy</a></li>
-      <li class="nav-item"><a class="nav-link active" href="/shop">Do'kon</a></li>
-      <li class="nav-item"><a class="nav-link active" href="contact.html">Aloqa</a></li>
+      <li class="nav-item"><a class="nav-link active" href="/shop">Do'kon</a></li>      <li class="nav-item"><a class="nav-link active" href="/contact">Aloqa</a></li>
     </ul>
     <div class="icons">
                  
@@ -43,7 +42,7 @@
     <button class="submit-btn">Search</button>
   </div>
 </div>
-      <a href="login.html"><i class="fa-regular fa-user"></i></a>
+      <a href="/login"><i class="fa-regular fa-user"></i></a>
       <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
     </div>
   </nav>
@@ -53,83 +52,66 @@
     </header>
 
 <body>
-    <div class="blob-container">
-        <!-- SVG Blob -->
-        <!-- Haikei-generated SVG content goes here -->
-        <!-- <svg xmlns="https://app.haikei.app/" width="800" height="600" viewBox="0 0 800 600">
-            <path d="M400 0C620 0 800 200 800 400C800 600 600 800 400 800C200 800 0 600 0 400C0 200 200 0 400 0Z" fill="#FF6347"></path>
-        </svg> -->
-    </div>
-    <h2>Mahsulotlar</h2>
-    <div class="product">
-      <div class="product-container">
-      <a href="details.html" class="product-card">
-        <img src="images/39.jpg" alt="Special Card">
-        <h2>Special Card</h2>
-        <p>AU$10.00</p>
-      </a>
-      <a href="details.html" class="product-card">
-        <img src="images/28.jpg" alt="Special Card">
-        <h2>Special Card</h2>
-        <p>AU$10.00</p>
-      </a>
-      <a href="details.html" class="product-card">
-        <img src="images/48.jpg" alt="Quote Card">
-        <h2>Quote Card</h2>
-        <p>AU$20.00</p>
-      </a>
-      <a href="details.html" class="product-card">
-        <img src="images/1.jpg" alt="Business Card Design">
-        <h2>Business Card Design</h2>
-        <p>AU$30.00</p>
-      </a>
-      <a href="details.html" class="product-card">
-        <img src="images/28.jpg" alt="Special Card">
-        <h2>Special Card</h2>
-        <p>AU$10.00</p>
-      </a>
-      <a href="details.html" class="product-card">
-        <img src="images/48.jpg" alt="Quote Card">
-        <h2>Quote Card</h2>
-        <p>AU$20.00</p>
-      </a>
-      <a href="details.html" class="product-card">
-        <img src="images/1.jpg" alt="Business Card Design">
-        <h2>Business Card Design</h2>
-        <p>AU$30.00</p>
-      </a>
-      <a href="details.html" class="product-card">
-        <img src="images/28.jpg" alt="Special Card">
-        <h2>Special Card</h2>
-        <p>AU$10.00</p>
-      </a>
-      <a href="details.html" class="product-card">
-        <img src="images/48.jpg" alt="Quote Card">
-        <h2>Quote Card</h2>
-        <p>AU$20.00</p>
-      </a>
-      <a href="details.html" class="product-card">
-        <img src="images/1.jpg" alt="Business Card Design">
-        <h2>Business Card Design</h2>
-        <p>AU$30.00</p>
-      </a>
-      <a href="details.html" class="product-card">
-        <img src="images/28.jpg" alt="Special Card">
-        <h2>Special Card</h2>
-        <p>AU$10.00</p>
-      </a>
-      <a href="details.html" class="product-card">
-        <img src="images/48.jpg" alt="Quote Card">
-        <h2>Quote Card</h2>
-        <p>AU$20.00</p>
-      </a>
-    </div>
-      <div class="p-actions">
-        <div class="swiper-btn swiper-button-prev"></div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-btn swiper-button-next"></div>
-      </div>
-    </div>
+<h2>Mahsulotlar</h2>
+
+<div class="shop-container">
+    <aside class="shop-filter-panel">
+  <h3>Filter</h3>
+
+  <div class="shop-filter-group">
+    <label for="category">Kategoriya</label>
+    <select id="category" class="shop-filter-select">
+  <option value="">Hammasi</option>
+  <!-- Fetch orqali options qo‘shiladi -->
+</select>
+  </div>
+
+  <div class="shop-filter-group">
+    <label for="size">O'lcham</label>
+    <select id="size" class="shop-filter-select">
+      <option value="">Hammasi</option>
+      <option value="small">Kichik</option>
+      <option value="medium">O'rtacha</option>
+      <option value="large">Katta</option>
+    </select>
+  </div>
+
+ <div class="shop-filter-group">
+  <label for="filterColor">Rang</label>
+  <div class="shop-filter-colors">
+    <label><input type="checkbox" name="color" value="qizil"> <span class="color-box" style="background-color:#ff4d4f;"></span> Qizil</label>
+    <label><input type="checkbox" name="color" value="yashil"> <span class="color-box" style="background-color:#52c41a;"></span> Yashil</label>
+    <label><input type="checkbox" name="color" value="ko'k"> <span class="color-box" style="background-color:#1890ff;"></span> Ko'k</label>
+    <label><input type="checkbox" name="color" value="qora"> <span class="color-box" style="background-color:#000;"></span> Qora</label>
+    <label><input type="checkbox" name="color" value="oq"> <span class="color-box" style="background-color:#fff; border:1px solid #ccc;"></span> Oq</label>
+  </div>
+</div>
+
+
+  <div class="shop-filter-group">
+  <label for="priceRange">Narxi (maks.):</label>
+  <input
+    type="range"
+    id="priceRange"
+    class="shop-filter-range"
+    min="0"
+    max="1000000"
+    step="1000"
+    value="1000000"
+  />
+  <span id="priceValue">1 000 000 so'm</span>
+</div>
+
+
+  <button class="shop-filter-apply">Filterlash</button>
+</aside>
+
+
+  <div class="shop-products" id="shop-products">
+    
+    <!-- Fetch orqali yuklanadigan kartalar shu yerga tushadi -->
+  </div>
+</div>
 
 
 
@@ -190,7 +172,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="/user-page/js/shop.js"></script>
-<script src="/user-page/js/search.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
+<script src="/user-page/js/shop.js"></script>
+  <script src="/user-page/js/search.js"></script>
+  <script src="/user-page/js/script.js"></script>
 </html>

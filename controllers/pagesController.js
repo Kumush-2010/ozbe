@@ -12,3 +12,10 @@ exports.home = (req, res) => {
 exports.shop = (req, res) => {
     return res.render('shop', { layout: false })
 }
+
+exports.contact = (req, res) => {
+    return res.render('contact', { layout: false })
+}
+exports.details = (req, res) =>{
+    return res.render('details', { layout: false })
+}
