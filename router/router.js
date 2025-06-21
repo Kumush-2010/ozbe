@@ -1,9 +1,9 @@
 
 const router = require('express').Router();
-const { login, loginPage, registerPage, register, checkAuth } = require("../controllers/authController");
+const { login, loginPage, registerPage, register, checkAuth, verifyCode, sendCode } = require("../controllers/authController");
 const { home, shop, contact, details } = require('../controllers/pagesController');
 const { profilPage, profil, updateProfile, card, cardPage } = require('../controllers/profilController');
-const { getAllProducts } = require('../controllers/productConstroller')
+const { getAllProducts } = require('../controllers/productController')
 const multer = require("multer");
 const { getAllCategories } = require('../controllers/categoryController');
 const upload = multer({ storage: multer.memoryStorage() });
@@ -17,7 +17,6 @@ router
     '/login',
     login
 )
-// 👇 Bu biz qo‘shgan yangi route:
 .get('/check-auth', checkAuth)
 .get(
     '/register',
@@ -63,6 +62,10 @@ router
 .get(
     '/details',
     details
+)
+.post(
+    '/verify-code',
+    verifyCode
 )
 
 module.exports = router

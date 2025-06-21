@@ -1,20 +1,31 @@
-
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/user-page/css/register.css">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/user-page/css/register.css" />
   <title>{{title}}</title>
-</head>
+  <style>
+    #verify-panel {
+      display: none;
+      margin-top: 20px;
+    }
 
+    .info-msg {
+      color: #03e9f4;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
 <body>
   <div class="signup-box">
     <h2>Sign Up</h2>
-    <form action="/register" method="POST">
+    <form id="register-form">
       <div class="user-box">
-        <input id="username" type="text" name="username" placeholder="Username" required />
+        <input id="name" type="text" name="name" placeholder="Name" required />
       </div>
 
       <div class="user-box">
@@ -23,22 +34,83 @@
 
       <div class="user-box">
         <input type="password" id="pwd" name="pwd" placeholder="Password"
-          pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" minlength="8" maxlength="15" required />
+          {{!-- pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"  --}}
+          minlength="8" maxlength="15" required />
       </div>
 
       <button type="submit" class="submit">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span><span></span>
         Submit
       </button>
 
+      <div id="reg-msg" class="info-msg"></div>
+
       <div class="log-in">
-        <p>Already have an account? <a class="log-in-link" href="/login"><strong>Log In</strong></a></p>
+        <p>Already have an account?
+          <a class="log-in-link" href="/login"><strong>Log In</strong></a>
+        </p>
       </div>
     </form>
-  </div>
-</body>
 
+    <div id="verify-panel">
+      <h3>SMS kodni kiriting</h3>
+      <div class="user-box">
+        <input type="text" id="code" placeholder="Tasdiqlash kodi" required />
+      </div>
+      <button type="button" id="verifyBtn" class="submit">
+        <span></span><span></span><span></span><span></span>
+        Verify
+      </button>
+      <div id="verify-msg" class="info-msg"></div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById('name').value;
+  const phone = document.getElementById('phone').value;
+  const pwd = document.getElementById('pwd').value;
+
+  const res = await fetch('/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, phone, password: pwd })
+  });
+
+  const data = await res.json();
+
+  if (res.ok) {
+    document.getElementById('reg-msg').textContent = "Kod yuborildi!";
+    document.getElementById('verify-panel').style.display = 'block';
+  } else {
+    document.getElementById('reg-msg').textContent = data.error || 'Xatolik yuz berdi';
+  }
+});
+
+    document.getElementById('verifyBtn').addEventListener('click', async () => {
+      const phone = document.getElementById('phone').value;
+      const code = document.getElementById('code').value;
+
+      const res = await fetch('/verify-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone, code })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        document.getElementById('verify-msg').textContent = 'Ro‘yxatdan o‘tildi!';
+        localStorage.setItem('token', data.token);
+        setTimeout(() => {
+          window.location.href = '/profil';
+        }, 1000);
+      } else {
+        document.getElementById('verify-msg').textContent = data.error || 'Xatolik yuz berdi';
+      }
+    });
+  </script>
+</body>
 </html>

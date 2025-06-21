@@ -1,11 +1,9 @@
-html {
-  height: 100vh;
-  width: 100vw;
-}
-
-body {
+html, body {
   margin: 0;
   padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden; /* Scroll chiqmasligi uchun */
   font-family: sans-serif;
   background: linear-gradient(#141e30, #243b55);
 }
@@ -42,32 +40,11 @@ body {
 }
 
 .log-in-link {
-  padding-top: 0;
-  margin-top: 0;
   color: #adadad;
-  text-align: center;
-  font-size: 14px;
   text-decoration: none;
 }
 
 .log-in-link:hover {
-  color: #03e9f4;
-}
-
-.forgot-password {
-  color: #adadad;
-  text-align: right;
-  font-size: 11px;
-}
-
-.forgot-password-link {
-  color: #adadad;
-  text-align: right;
-  font-size: 11px;
-  text-decoration: none;
-}
-
-.forgot-password-link:hover {
   color: #03e9f4;
 }
 
@@ -87,24 +64,12 @@ body {
   background: transparent;
 }
 
-.signup-box .user-box label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 10px 0;
-  font-size: 16px;
-  color: #fff;
-  pointer-events: none;
-  transition: 0.5s;
-}
-
 .signup-box form .submit {
   position: relative;
   display: inline-block;
   padding: 10px 20px;
   color: #03e9f4;
   font-size: 16px;
-  text-decoration: none;
   text-transform: uppercase;
   overflow: hidden;
   transition: 0.5s;
@@ -121,12 +86,12 @@ body {
   cursor: pointer;
 }
 
-.signup-box a span {
+.signup-box .submit span {
   position: absolute;
   display: block;
 }
 
-.signup-box a span:nth-child(1) {
+.signup-box .submit span:nth-child(1) {
   top: 0;
   left: -100%;
   width: 100%;
@@ -139,13 +104,12 @@ body {
   0% {
     left: -100%;
   }
-  50%,
-  100% {
+  50%, 100% {
     left: 100%;
   }
 }
 
-.signup-box a span:nth-child(2) {
+.signup-box .submit span:nth-child(2) {
   top: -100%;
   right: 0;
   width: 2px;
@@ -159,13 +123,12 @@ body {
   0% {
     top: -100%;
   }
-  50%,
-  100% {
+  50%, 100% {
     top: 100%;
   }
 }
 
-.signup-box a span:nth-child(3) {
+.signup-box .submit span:nth-child(3) {
   bottom: 0;
   right: -100%;
   width: 100%;
@@ -179,13 +142,12 @@ body {
   0% {
     right: -100%;
   }
-  50%,
-  100% {
+  50%, 100% {
     right: 100%;
   }
 }
 
-.signup-box a span:nth-child(4) {
+.signup-box .submit span:nth-child(4) {
   bottom: -100%;
   left: 0;
   width: 2px;
@@ -199,25 +161,47 @@ body {
   0% {
     bottom: -100%;
   }
-  50%,
-  100% {
+  50%, 100% {
     bottom: 100%;
   }
 }
 
-footer {
-  margin: 0;
-  padding: 5px;
-  font-family: sans-serif;
-  background: linear-gradient(#141e30, #243b55);
-  color: #adadad;
+#verify-panel {
+  margin-top: 30px;
+  display: none;
+  padding-top: 10px;
+  border-top: 1px solid #03e9f4;
+}
+
+#verify-panel h3 {
+  color: #fff;
+  font-size: 18px;
+  margin-bottom: 20px;
   text-align: center;
 }
 
-.footer-div {
-  width: 100vw;
-  position: absolute;
-  top: 100vh;
-  bottom: 0;
-  left: 0;
+#verify-panel input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+
+.info-msg, .error-msg {
+  font-size: 13px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.info-msg {
+  color: #03e9f4;
+}
+
+.error-msg {
+  color: #ff4c4c;
 }

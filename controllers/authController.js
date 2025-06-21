@@ -1,6 +1,56 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const sendSMS = require('../utils/eskiz');
+const codes = new Map(); 
+
+exports.registerPage = (req, res) => {
+  return res.render('register', { layout: false });
+}
+
+function generateCode() {
+  return Math.floor(1000 + Math.random() * 9000).toString();
+}
+
+exports.register = async (req, res) => {
+  const { name, phone, password } = req.body;
+
+  const existing = await User.findOne({ phone });
+  if (existing) return res.status(400).json({ error: 'Bu raqam allaqachon ro‘yxatdan o‘tgan' });
+
+  const code = generateCode();
+
+  codes.set(phone, {
+    name,
+    password,
+    code,
+    expiresAt: Date.now() + 5 * 60 * 1000
+  });
+
+  await sendSMS(phone, code);
+
+  res.json({ message: 'Kod yuborildi (yoki konsolga chiqarildi)' });
+};
+
+exports.verifyCode = async (req, res) => {
+  const { phone, code } = req.body;
+  const saved = codes.get(phone);
+
+  if (!saved || saved.code !== code || Date.now() > saved.expiresAt) {
+    return res.status(400).json({ error: 'Kod noto‘g‘ri yoki eskirgan' });
+  }
+
+  const { name, password } = saved;
+  codes.delete(phone);
+
+  const hashedPassword = await bcrypt.hash(password, 10)
+  const user = await User.create({ name, phone, password: hashedPassword });
+
+  const token = jwt.sign({ id: user._id, phone }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+  res.json({ message: 'Ro‘yxatdan o‘tildi', token });
+};
+
 
 // JWT token yaratish
 const generateToken = (user) => {
@@ -10,7 +60,6 @@ const generateToken = (user) => {
     { expiresIn: "2d" }
   );
 };
-
 
 exports.loginPage = (req, res) => {
     return res.render('login', { layout: false });
@@ -71,40 +120,6 @@ exports.checkAuth = (req, res) => {
     return res.json({ loggedIn: false });
   }
 };
-exports.registerPage = (req, res) => {
-  return res.render('register', { layout: false });
-}
-
-exports.register = async (req, res) => {
-  try {
-
-  const { name, phone, password } = req.body;
-
-    const existingUser = await User.findOne({ phone });
-    if (existingUser) return res.status(400).json({ message: 'Telefon raqam allaqachon band' });
-
-    const user = await User.create({ name, phone, password });
-    const token = generateToken(user);
-
-    res.status(201).json({
-      user: {
-        id: user._id,
-        name: user.name,
-        phone: user.phone,
-        role: user.role
-      },
-      token,
-    });
-
-    // res.status(200).json({ message: "Muvaffaqiyatli kirdingiz", user });
-    return res.redirect('/user')
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Serverda xatolik" });
-  }
-}
-
-
 
 exports.logout = (req, res) => {
   res.clearCookie("token");
