@@ -3,12 +3,6 @@ const dotenv = require("dotenv").config();
 
 exports.jwtAccessMiddleware = function (req, res, next) {
     try {
-        // const authHeader = req.headers["authorization"];
-        // if (!authHeader) {
-        //     return res.status(404).send({
-        //         error: "Token not found!",
-        //     });
-        // }
 
 const token = req.cookies.token;
 

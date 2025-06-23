@@ -152,7 +152,7 @@
   });
 
 
-document.getElementById('payBtn').addEventListener('click', async function () {
+document.getElementById('payBtn')?.addEventListener('click', async function () {
   const cardNumber = document.getElementById('cardNumber').value;
   const cardHolder = document.getElementById('cardHolder').value;
   const expiry = document.getElementById('expiry').value;
