@@ -16,10 +16,7 @@ exports.getWishlist = async (req, res) => {
       .populate('productId') // mahsulot haqida to‘liq ma’lumot
 
       console.log(items)
-    res.render('wishlist', {
-        title: 'Wishlarim',
-        wishlist: items
-    })
+    res.json(items)
   } catch (error) {
     console.error("Wishlistni olishda xatolik:", error);
     res.status(500).json({ success: false });
@@ -60,17 +57,22 @@ exports.addWishlist = async (req, res) => {
   }
 };
 
-
 exports.removeWishlist = async (req, res) => {
-    const { productId } = req.body
-    const userId = req.session.userId
+  try {
+    const { id } = req.params;
 
-    try {
-        await wishlist.deleteOne({ userId, productId })
-        res.json({ success: true })
-    } catch (error) {
-        console.error(error)
-        res.json({ success: false})
+    const deleted = await wishlist.findByIdAndDelete(id);
+
+    if (!deleted) {
+      return res.status(404).json({ success: false, message: "Wishlist topilmadi" });
     }
-}
+
+    res.json({ success: true, message: "Wishlistdan o‘chirildi" });
+  } catch (error) {
+    console.error("O‘chirishda xatolik:", error);
+    res.status(500).json({ success: false, message: "Server xatoligi" });
+  }
+};
+
+
 

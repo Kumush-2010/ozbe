@@ -1,38 +1,23 @@
-
-const username = document.getElementById('username');
-const password = document.getElementById('pwd');
-const loginBtn = document.querySelector('.submit');
-
-const user = [
-    {
-        username: 'admin',
-        password: 'admin',
-    }
-]
-
-loginBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const userName = username.value;
-    const passWord = password.value;
-
-    if (userName === user[0].username && passWord === user[0].password) {
-        window.location.href = './user-page/profil.html';
-    } else {
-        alert('Invalid username or password!');
-    }
-} 
-
-);
-
-
-const phoneInput = document.getElementById('phone');
-const passwordInput = document.getElementById('password');
-const submitBtn = document.querySelector('.submit');
-
-submitBtn.addEventListener('click', async (e) => {
+document.getElementById('login-form').addEventListener('submit', async (e) => {
   e.preventDefault();
-  console.log('Login tugmasi bosildi');
 
-  const phone = phoneInput.value.trim();
-  const password = passwordInput.value;
-})
+  const phone = document.getElementById('phone').value;
+  const password = document.getElementById('password').value;
+
+  const res = await fetch('/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ phone, password })
+  });
+
+  const data = await res.json();
+
+  if (res.ok) {
+    // Optional: tokenni localStorage ga saqlash
+    localStorage.setItem('token', data.token);
+    // Endi redirect qilish
+    window.location.href = '/profil';
+  } else {
+    document.getElementById('login-msg').textContent = data.error || "Xatolik yuz berdi";
+  }
+});

@@ -31,35 +31,14 @@
 
 document.addEventListener('DOMContentLoaded', async () => {
   let allProducts = [];
-  let wishlistItems = [];
 
   const productContainer = document.getElementById('shop-products');
-  const wishlistContainer = document.getElementById('wishlist-container');
   const categorySelect = document.getElementById('category');
   const sizeSelect = document.getElementById('size');
   const colorCheckboxes = document.querySelectorAll('input[name="color"]');
   const priceRange = document.getElementById('priceRange');
   const priceValue = document.getElementById('priceValue');
   const filterButton = document.querySelector('.shop-filter-apply');
-
-  // ✅ 1. Wishlist ma’lumotlarini olish
-  try {
-    const res = await fetch('http://localhost:7000/wishlist', {
-      method: 'GET',
-      credentials: 'include'
-    });
-
-    const result = await res.json();
-    if (result.success) {
-      wishlistItems = result.items.map(item => item.productId._id || item.productId);
-
-      // 👉 Wishlist productlarini alohida chiqarish
-      const wishlistProducts = result.items.map(item => item.productId);
-      renderWishlist(wishlistProducts);
-    }
-  } catch (err) {
-    console.error("Wishlistni yuklashda xatolik:", err);
-  }
 
   // 💰 Narx real-timeda
   priceRange.addEventListener('input', () => {
@@ -143,8 +122,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       const image1 = product.images?.[0] || 'images/placeholder.jpg';
       const image2 = product.images?.[1] || image1;
 
-      const isInWishlist = wishlistItems.includes(product._id);
-
       card.innerHTML = `
         <div class="shop-card-image">
           <img src="${image1}" alt="${product.name}" />
@@ -154,10 +131,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           <p class="shop-card-price">${parseInt(product.price).toLocaleString('uz-UZ')} so'm</p>
         </div>
         <div class="shop-card-actions">
-         <button class="wishlist-btn" data-product-id="${product._id}" data-action="wishlist">
-           ${isInWishlist ? '❤️' : '🤍'}
-         </button>
-         <button class="shop-btn" data-id="${product._id}" data-action="cart">🛒</button>
+         <button class="wishlist-btn" data-product-id="${product._id}" data-action="wishlist">🤍</button>
+         <button class="btn-cart" data-id="${product._id}" data-action="cart">🛒</button>
         </div>
       `;
 
@@ -169,7 +144,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       wishlistBtn.addEventListener('click', async () => {
         const productId = wishlistBtn.dataset.productId;
         const isLiked = wishlistBtn.textContent === '❤️';
-        const url = isLiked ? '/wishlist/remove' : '/wishlist/add';
+        const url = isLiked ? '/wishlists/${id}' : '/wishlist/add';
 
         try {
           const res = await fetch(url, {
@@ -194,39 +169,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // ❤️ Wishlistni chiqarish
-  function renderWishlist(products) {
-    if (!wishlistContainer) return;
-
-    wishlistContainer.innerHTML = '';
-
-    if (products.length === 0) {
-      wishlistContainer.innerHTML = '<p>Wishlist bo‘sh.</p>';
-      return;
-    }
-
-    products.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'shop-card';
-
-      const image = product.images?.[0] || 'images/placeholder.jpg';
-
-      card.innerHTML = `
-        <div class="shop-card-image">
-          <img src="${image}" alt="${product.name}" />
-        </div>
-        <div class="shop-card-content">
-          <h3 class="shop-card-title">${product.name}</h3>
-          <p class="shop-card-price">${parseInt(product.price).toLocaleString('uz-UZ')} so'm</p>
-        </div>
-      `;
-
-      wishlistContainer.appendChild(card);
-    });
-  }
-
-  // 🔤 Foydali funksiya
   function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 });
+

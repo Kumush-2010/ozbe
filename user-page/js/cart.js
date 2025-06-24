@@ -63,7 +63,7 @@ $(document).ready(function () {
     const cartContainer = document.getElementById("cart-items");
 
     if (cart.length === 0) {
-      cartContainer.innerHTML = "<p>Savatcha bo‘sh</p>";
+      cartContainer.innerHTML= "<p>Savatcha bo‘sh</p>";
       return;
     }
 

@@ -23,3 +23,7 @@ exports.details = (req, res) =>{
 exports.wishlist = (req, res) => {
     return res.render('wishlist', { layout: false })
 }
+
+exports.cart = (req, res) => {
+    return res.render('cart', {layout: false })
+}

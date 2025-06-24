@@ -5,32 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Wishlist</title>
 
+    <!-- Faqat kerakli CSS fayllari -->
     <link rel="stylesheet" href="/user-page/css/wishlist.css" />
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/swiper/swiper-bundle.min.css"
-    />
-
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="/user-page/css/style.css" />
+    <link rel="stylesheet" href="/user-page/css/server.css" />
+    {{!-- <link rel="stylesheet" href="/user-page/css/profil.css" /> --}}
+    {{!-- <link rel="stylesheet" href="/user-page/css/myorder.css" /> --}}
+    <link rel="stylesheet" href="/user-page/css/search.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="/user-page/css/style.css" />
-    <link rel="stylesheet" href="/user-page/css/server.css" />
-    <link rel="stylesheet" href="/user-page/css/profil.css" />
-    <link rel="stylesheet" href="/user-page/css/myorder.css" />
-    <link rel="stylesheet" href="/user-page/css/search.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
   </head>
   <body>
+    <!-- HEADER -->
     <header>
       <div class="announcement-bar">
         <button class="prev">&#10094;</button>
@@ -40,41 +36,30 @@
 
       <nav class="navbar">
         <ul class="nav-links nav nav-underline">
-          <a href="/home" class="logo"
-            ><img src="/images/logo.png" class="logo" alt=""
-          /></a>
-          <li class="nav-item">
-            <a class="nav-link active" href="/home">Asosiy</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="/shop">Do'kon</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="/contact">Aloqa</a>
-          </li>
+          <a href="/home" class="logo">
+            <img src="/images/logo.png" class="logo" alt="logo" />
+          </a>
+          <li class="nav-item"><a class="nav-link active" href="/home">Asosiy</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/shop">Do'kon</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/contact">Aloqa</a></li>
         </ul>
         <div class="icons">
-          <!-- Oddiy Search Icon -->
-          <a id="openSearch" >
-     <i class="fas fa-search"></i>
- </a>
-
-          <!-- Modal -->
-<div id="searchModal" class="modal">
-  <div class="modal-content">
-    <span id="closeModal" class="close">&times;</span>
-    <input type="text" placeholder="Search here..." class="search-input" />
-    <button class="submit-btn">Search</button>
-  </div>
-</div>
+          <a id="openSearch"><i class="fas fa-search"></i></a>
+          <div id="searchModal" class="modal">
+            <div class="modal-content">
+              <span id="closeModal" class="close">&times;</span>
+              <input type="text" placeholder="Search here..." class="search-input" />
+              <button class="submit-btn">Search</button>
+            </div>
+          </div>
           <a href="/login"><i class="fa-regular fa-user"></i></a>
           <a href="../cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
         </div>
       </nav>
     </header>
 
+    <!-- MAIN CONTENT -->
     <div class="wrapper">
-      <!-- Sidebar -->
       <aside class="sidebar">
         <nav class="menu">
           <a href="/profil" class="active">🧑 Malumotlarim</a>
@@ -82,54 +67,22 @@
           <a href="./returns.html">↩️ Qaytarilgan & Bekor qilingan</a>
           <a href="./reviews.html">⭐ Sharhlarim</a>
           <a href="/wishlist">💖 Saralangan</a>
-          <a
-            href="/home"
-            style="
-              display: block;
-              padding: 0.75rem;
-              color: #111;
-              text-decoration: none;
-              border-radius: 0.375rem;
-              margin-bottom: 0.5rem;
-            "
-          >
-            <i class="fa fa-sign-in-alt me-2"></i>
-            <span>Chiqish</span>
+          <a href="/home" class="logout-link">
+            <i class="fa fa-sign-in-alt me-2"></i> <span>Chiqish</span>
           </a>
         </nav>
       </aside>
+
       <div class="order">
         <h2 style="color: #111; font-size: 20px;">Saralanganlar</h2>
         <div id="wishlist-container" class="wishlist-grid"></div>
       </div>
     </div>
+
+    <!-- SCRIPT FILELAR (faqat keraklilar va to'g'ri tartibda) -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="/user-page/js/script.js"></script>
+    <script src="/user-page/js/search.js"></script>
+    <script src="/user-page/js/wishlist.js"></script>
   </body>
-  {{!-- <script>
-    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-
-    const container = document.getElementById("wishlist-container");
-
-    wishlist.forEach((item) => {
-      const card = document.createElement("div");
-      card.classList.add("wishlist-card");
-      card.innerHTML = `
-        <img src="${item.image}" alt="${item.name}">
-        <h3>${item.name}</h3>
-        <p>Price: AU$${item.price}</p>
-      `;
-      container.appendChild(card);
-    });
-  </script> --}}
-
-  <script src="/user-page/js/profil.js"></script>
-  <script src="/user-page/js/script.js"></script>
-  {{!-- <script src="/user-page/js/myorder.js"></script> --}}
-  
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
-
-  <script src="/user-page/js/search.js"></script>
 </html>
-

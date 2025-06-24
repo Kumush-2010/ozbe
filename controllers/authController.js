@@ -1,54 +1,77 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const sendSMS = require('../utils/eskiz');
-const codes = new Map(); 
-
-exports.registerPage = (req, res) => {
-  return res.render('register', { layout: false });
-}
+const sendSMS = require("../utils/eskiz");
+const codes = new Map();
 
 function generateCode() {
   return Math.floor(1000 + Math.random() * 9000).toString();
 }
 
-exports.register = async (req, res) => {
-  const { name, phone, password } = req.body;
 
-  const existing = await User.findOne({ phone });
-  if (existing) return res.status(400).json({ error: 'Bu raqam allaqachon ro‘yxatdan o‘tgan' });
-
-  const code = generateCode();
-
-  codes.set(phone, {
-    name,
-    password,
-    code,
-    expiresAt: Date.now() + 5 * 60 * 1000
-  });
-
-  await sendSMS(phone, code);
-
-  res.json({ message: 'Kod yuborildi (yoki konsolga chiqarildi)' });
+exports.registerPage = (req, res) => {
+  return res.render("register", { layout: false });
 };
 
-exports.verifyCode = async (req, res) => {
-  const { phone, code } = req.body;
-  const saved = codes.get(phone);
+// Bitta endpoint: ro'yxatdan o'tish yoki tasdiqlash
+exports.register = async (req, res) => {
+  const { name = "", phone, password: rawPassword, code } = req.body;
+  const password = typeof rawPassword === "string" ? rawPassword.trim() : "";
 
-  if (!saved || saved.code !== code || Date.now() > saved.expiresAt) {
-    return res.status(400).json({ error: 'Kod noto‘g‘ri yoki eskirgan' });
+  if (!phone) return res.status(400).json({ error: "Telefon raqam kiritilmagan." });
+
+  // 1. Agar kod yuborilmagan bo‘lsa — bu register bosqichi
+  if (!code) {
+    if (!password || !name.trim()) {
+      return res.status(400).json({ error: "Ism va parol talab qilinadi." });
+    }
+
+    const existing = await User.findOne({ phone });
+    if (existing) {
+      return res.status(400).json({ error: "Bu raqam allaqachon ro‘yxatdan o‘tgan" });
+    }
+
+    const verificationCode = generateCode();
+    codes.set(phone, {
+      name: name.trim(),
+      password,
+      code: verificationCode,
+      expiresAt: Date.now() + 5 * 60 * 1000, // 5 daqiqa
+    });
+
+    await sendSMS(phone, verificationCode);
+    return res.json({ message: "Kod yuborildi" });
   }
 
-  const { name, password } = saved;
+  // 2. Aks holda bu verify bosqichi
+  const saved = codes.get(phone);
+  if (!saved || saved.code !== code || Date.now() > saved.expiresAt) {
+    return res.status(400).json({ error: "Kod noto‘g‘ri yoki eskirgan" });
+  }
+
   codes.delete(phone);
 
-  const hashedPassword = await bcrypt.hash(password, 10)
-  const user = await User.create({ name, phone, password: hashedPassword });
+  const hashedPassword = await bcrypt.hash(saved.password.trim(), 10);
+  const user = await User.create({
+    name: saved.name,
+    phone,
+    password: hashedPassword,
+  });
 
-  const token = jwt.sign({ id: user._id, phone }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  const token = jwt.sign(
+    { id: user._id, phone: user.phone, role: user.role },
+    process.env.JWT_SECRET,
+    { expiresIn: "2d" }
+  );
 
-  res.json({ message: 'Ro‘yxatdan o‘tildi', token });
+  res.cookie("token", token, { httpOnly: true, maxAge: 2 * 24 * 60 * 60 * 1000 });
+  res.cookie("userId", user._id.toString(), {
+    httpOnly: false,
+    maxAge: 2 * 24 * 60 * 60 * 1000,
+    path: "/",
+  });
+
+  res.json({ message: "Ro‘yxatdan o‘tildi", token });
 };
 
 
@@ -62,52 +85,60 @@ const generateToken = (user) => {
 };
 
 exports.loginPage = (req, res) => {
-    return res.render('login', { layout: false });
-}
+  return res.render("login", { layout: false });
+};
 
 exports.login = async (req, res) => {
   const { phone, password } = req.body;
+
   try {
     const user = await User.findOne({ phone });
-   if (!user) {
-  return res.status(404).send("Foydalanuvchi topilmadi.");
-}
 
-if (!password || !user.password) {
-  return res.status(400).send("Parol yoki xash yetishmayapti.");
-}
+    if (!user) {
+      return res.status(404).json({ error: "Foydalanuvchi topilmadi." });
+    }
 
-const isMatch = await bcrypt.compare(password, user.password);
+    if (!password) {
+      return res.status(400).json({ error: "Parol kiritilmagan." });
+    }
 
-if (!isMatch) {
-  return res.status(401).send("Parol noto'g'ri.");
-}
+    const isMatch =  bcrypt.compare(password, user.password);
 
+    if (!isMatch) {
+      return res.status(401).json({ error: "Parol noto'g'ri." });
+    }
 
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
 
-    // 💾 Cookie-ga token va userId ni saqlaymiz:
     res.cookie("token", token, {
       httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000, // 1 kun
+      maxAge: 24 * 60 * 60 * 1000,
     });
 
- res.cookie("userId", user._id.toString(), {
-  httpOnly: false,
-  maxAge: 24 * 60 * 60 * 1000,
-  path: "/"            // cookie butun domen bo‘ylab ko‘rinishi uchun
-});
+    res.cookie("userId", user._id.toString(), {
+      httpOnly: false,
+      maxAge: 24 * 60 * 60 * 1000,
+      path: "/",
+    });
 
+    return res.status(200).json({
+      message: "Muvaffaqiyatli kirdingiz",
+      token,
+      user,
+    });
 
-    // res.status(200).json({ message: "Muvaffaqiyatli kirdingiz", user });
-    return res.redirect('/profil')
+    // AGAR redirect qilish kerak bo‘lsa: return res.redirect('/profil');
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Serverda xatolik" });
+    return res.status(500).json({ error: "Serverda xatolik yuz berdi." });
   }
 };
+
+
 
 exports.checkAuth = (req, res) => {
   const token = req.cookies.token;
@@ -124,5 +155,5 @@ exports.checkAuth = (req, res) => {
 exports.logout = (req, res) => {
   res.clearCookie("token");
   // res.status(200).json({ message: "Chiqdingiz!" });
-  return res.redirect('/api/auth/login')
+  return res.redirect("/api/auth/login");
 };
