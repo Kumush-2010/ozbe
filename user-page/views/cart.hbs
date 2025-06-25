@@ -78,112 +78,8 @@
         <div class="grid_12">
           <h1 class="savat">Savat</h1>
         </div>
-        <ul class="items">
-          <li class="grid_4 item">
-            <a href="#" class="btn-remove">
-              <i class="far fa-trash-alt"></i>
-            </a>
-            <div class="preview">
-              <img src="/images/1.jpg" alt="Lasagne Al Forno" />
-            </div>
-            <div class="details" data-price="15.50">
-              <h3>Lasagne Al Forno</h3>
-              <p>4 kishi uchun (1480g)</p>
-            </div>
-            <div class="inner_container">
-              <div class="col_1of2 align-center picker">
-                <p>
-                  <a href="#" class="btn-quantity plus">
-                    <i class="fas fa-plus"></i>
-                  </a>
-                  <div class="col_1of2 quantity-text">
-                    <p><span class="current_quantity">1</span> @ £15.50</p>
-                  </div>
-                  <a href="#" class="btn-quantity minus">
-                    <i class="fas fa-minus"></i>
-                  </a>
-                </p>
-                <input
-                  type="hidden"
-                  class="quantity_field"
-                  name="quantity"
-                  data-price="15.50"
-                  value="1"
-                />
-              </div>
-            </div>
-          </li>
-          <li class="grid_4 item">
-            <a href="#" class="btn-remove">
-              <i class="far fa-trash-alt"></i>
-            </a>
-            <div class="preview">
-              <img src="/images/1.jpg" alt="Garlic Ciabatta" />
-            </div>
-            <div class="details" data-price="2.49">
-              <h3>Garlic Ciabatta</h3>
-              <p>4 kishi uchun</p>
-            </div>
-            <div class="inner_container">
-              <div class="col_1of2 align-center picker">
-                <p>
-                  <a href="#" class="btn-quantity plus">
-                    <i class="fas fa-plus"></i>
-                  </a>
-                  <div class="col_1of2 quantity-text">
-                    <p><span class="current_quantity">1</span> @ £2.49</p>
-                  </div>
-                  <a href="#" class="btn-quantity minus">
-                    <i class="fas fa-minus"></i>
-                  </a>
-                </p>
-                <input
-                  type="hidden"
-                  class="quantity_field"
-                  name="quantity"
-                  data-price="2.49"
-                  value="1"
-                />
-              </div>
-            </div>
-          </li>
-          <li class="grid_4 item">
-            <a href="#" class="btn-remove">
-              <i class="far fa-trash-alt"></i>
-            </a>
-            <div class="preview">
-              <img
-                src="images/1.jpg"
-                alt="White Chocolate & Raspberry Cheesecake"
-              />
-            </div>
-            <div class="details" data-price="8.50">
-              <h3>White Chocolate & Raspberry Cheesecake</h3>
-              <p>6 kishi uchun (550g)</p>
-            </div>
-            <div class="inner_container">
-              <div class="col_1of2 align-center picker">
-                <p>
-                  <a href="#" class="btn-quantity plus">
-                    <i class="fas fa-plus"></i>
-                  </a>
-                  <div class="col_1of2 quantity-text">
-                    <p><span class="current_quantity">1</span> @ £8.50</p>
-                  </div>
-                  <a href="#" class="btn-quantity minus">
-                    <i class="fas fa-minus"></i>
-                  </a>
-                </p>
-                <input
-                  type="hidden"
-                  class="quantity_field"
-                  name="quantity"
-                  data-price="8.50"
-                  value="1"
-                />
-              </div>
-            </div>
-          </li>
+        <ul id="cart-container" class="items">
+     
         </ul>
         <div class="grid_12 delivery-payment">
           <div class="grid_6 delivery-address">
@@ -231,7 +127,7 @@
     </div>
      <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="/user-page/js/script.js"></script>
-    <script src="/user-page/js/cart.js"></script>
     <script src="/user-page/js/search.js"></script>
+    <script src="/user-page/js/cart.js" defer></script>
   </body>
 </html>

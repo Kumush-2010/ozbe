@@ -11,7 +11,7 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const connectDB = require("./database/db");
 const { jwtAccessMiddleware } = require("./middlewares/jwt-access.middleware");
-const cors = require('cors');
+const cors = require("cors");
 const router = require("./router/router");
 
 connectDB();
@@ -23,30 +23,46 @@ const hbs = create({
   helpers: {
     eq: (a, b) => {
       return a === b;
-    }
-  }
+    },
+  },
 });
 
-const app = express(); 
+const app = express();
 
-app.use(express.json())
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:4000",
+    credentials: true,
+  })
+);
 app.use(flash());
-app.use(express.static("user-page")); 
+app.use(express.static("user-page"));
 
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
-app.set("views", "./user-page/views"); 
-app.use(session({ secret: "User", resave: false, saveUninitialized: false }));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.set("views", "./user-page/views");
+app.use(
+  session({
+    name: 'connect.sid',
+    secret: "User",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      sameSite: "lax",
+      secure: false,
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    },
+  })
+);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/images", express.static(path.join(__dirname, "images")));
 // app.use('/user-page/views', express.static(path.join(__dirname, 'views')))
-app.use('/user-page', express.static(path.join(__dirname, '/user-page')));
-
-
+app.use("/user-page", express.static(path.join(__dirname, "/user-page")));
 
 app.use("/", router);
 

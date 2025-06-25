@@ -1,91 +1,147 @@
-$(document).ready(function () {
-  let $addQuantity = $(".btn-quantity.plus"),
-      $minusQuantity = $(".btn-quantity.minus"),
-      $removeItem = $(".btn-remove");
+document.addEventListener("DOMContentLoaded", async () => {
+  console.log("Page loaded");
+  const container = document.getElementById("cart-container");
+  let cartItems = [];
 
-  $addQuantity.on("click", function (e) {
-    e.preventDefault();
-    let $item = $(this).parents(".item"),
-        $quantityField = $item.find(".quantity_field"),
-        currentQuantity = $quantityField.val(),
-        nextQuantity = parseFloat(currentQuantity) + 1;
-
-    $item.find(".current_quantity").html(nextQuantity);
-    $quantityField.val(nextQuantity);
-
-    calculateTotal();
-  });
-
-  $minusQuantity.on("click", function (e) {
-    e.preventDefault();
-    let $item = $(this).parents(".item"),
-        $quantityField = $item.find(".quantity_field"),
-        currentQuantity = $quantityField.val();
-    let prevQuantity = currentQuantity <= 1 ? 0 : parseFloat(currentQuantity) - 1;
-
-    $item.find(".current_quantity").html(prevQuantity);
-    $quantityField.val(prevQuantity);
-
-    calculateTotal();
-  });
-
-  $removeItem.on("click", function () {
-    let $item = $(this).parents(".item");
-    $item.remove();
-
-    calculateTotal();
-  });
-
-  let calculateTotal = function () {
-    let newSubTotal = 0;
-    $(".quantity_field").each(function () {
-      let quantity = $(this).val(),
-          price = $(this).data("price");
-
-      newSubTotal += parseFloat(quantity * price);
+  try {
+    const res = await fetch("http://localhost:7000/cart", {
+      method: "GET",
+      cache: "no-store"
     });
+    const result = await res.json();
 
-    $(".sub-total .amount").html("£" + newSubTotal.toFixed(2));
+    if (result.success && Array.isArray(result.items)) {
+      cartItems = result.items.map(item => ({
+        ...item.product,
+        _cartId: item._id,
+        quantity: item.quantity
+      }));
+      renderCart(cartItems);
+    } else {
+      container.innerHTML = "<li><p>Savat bo‘sh.</p></li>";
+    }
+  } catch (error) {
+    console.error("Savatni yuklashda xatolik:", error);
+    container.innerHTML = "<li><p>Ma’lumot olib kelishda xatolik.</p></li>";
+  }
 
-    let withTax = newSubTotal * 1.2;
+  function renderCart(items) {
+    container.innerHTML = "";
 
-    let newTotal = withTax;
-
-    $(".total .amount").html("Total" + " " + "£" + newTotal.toFixed(2));
-  };
-
-  calculateTotal();
-});
-
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const cartContainer = document.getElementById("cart-items");
-
-    if (cart.length === 0) {
-      cartContainer.innerHTML= "<p>Savatcha bo‘sh</p>";
+    if (!items.length) {
+      container.innerHTML = "<li><p>Savat bo‘sh.</p></li>";
       return;
     }
 
-    let total = 0;
-    cart.forEach((item) => {
-      const itemTotal = parseFloat(item.price.replace("$", "")) * item.quantity;
-      total += itemTotal;
+    items.forEach(item => {
+      const li = document.createElement("li");
+      li.className = "grid_4 item";
 
-      const productHTML = `
-        <div class="cart-item">
-          <img src="${item.image}" width="80">
-          <div>
-            <h5>${item.name}</h5>
-            <p>Size: ${item.size}, Color: ${item.color}</p>
-            <p>Narx: ${item.price} x ${item.quantity} = $${itemTotal.toFixed(2)}</p>
+      const imgSrc = item.images?.[0] || "/images/placeholder.jpg";
+      const unitPrice = parseFloat(item.price);
+      const qty = item.quantity;
+
+      li.innerHTML = `
+        <a href="#" class="btn-remove" data-cart-id="${item._cartId}">
+          <i class="far fa-trash-alt"></i>
+        </a>
+        <div class="preview">
+          <img src="${imgSrc}" alt="${item.name}" />
+        </div>
+        <div class="details" data-price="${(unitPrice * qty).toFixed(2)}">
+          <h3>${item.name}</h3>
+          <p>${item.description || ""}</p>
+        </div>
+        <div class="inner_container">
+          <div class="col_1of2 align-center picker">
+            <p>
+              <a href="#" class="btn-quantity plus" data-cart-id="${item._cartId}">
+                <i class="fas fa-plus"></i>
+              </a>
+              <div class="col_1of2 quantity-text">
+                <p><span class="current_quantity">${qty}</span> @ £${unitPrice.toFixed(2)}</p>
+              </div>
+              <a href="#" class="btn-quantity minus" data-cart-id="${item._cartId}">
+                <i class="fas fa-minus"></i>
+              </a>
+            </p>
+            <input
+              type="hidden"
+              class="quantity_field"
+              name="quantity"
+              data-unit-price="${unitPrice.toFixed(2)}"
+              value="${qty}"
+            />
           </div>
         </div>
-        <hr>
       `;
-      cartContainer.innerHTML += productHTML;
+
+      li.querySelector(".btn-remove").addEventListener("click", async e => {
+        e.preventDefault();
+        const cartId = e.currentTarget.dataset.cartId;
+        try {
+          const resp = await fetch(`http://localhost:7000/carts/${cartId}`, {
+            method: "DELETE",
+            credentials: "include"
+          });
+          const data = await resp.json();
+          if (data.success) {
+            li.remove();
+            updateSummary();
+            if (!container.children.length) {
+              container.innerHTML = "<li><p>Savat bo‘sh.</p></li>";
+            }
+          } else {
+            alert("O‘chirishda xato");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Server bilan bog‘liq muammo");
+        }
+      });
+
+      li.querySelector(".plus").addEventListener("click", e => {
+        e.preventDefault();
+        changeQty(li, +1);
+      });
+      li.querySelector(".minus").addEventListener("click", e => {
+        e.preventDefault();
+        changeQty(li, -1);
+      });
+
+      container.appendChild(li);
     });
 
-    document.getElementById("total-price").innerText = "$" + total.toFixed(2);
-  });
+    updateSummary();
+  }
 
+  function changeQty(li, delta) {
+    const qtyField = li.querySelector(".quantity_field");
+    let qty = parseInt(qtyField.value, 10) + delta;
+    if (qty < 1) return;
+
+    qtyField.value = qty;
+    li.querySelector(".current_quantity").textContent = qty;
+
+    const unitPrice = parseFloat(qtyField.dataset.unitPrice);
+    const newLineTotal = (unitPrice * qty).toFixed(2);
+
+    const details = li.querySelector(".details");
+    details.dataset.price = newLineTotal;
+    details.querySelector("p").innerHTML = `<span class="current_quantity">${qty}</span> @ £${unitPrice.toFixed(2)}`;
+
+    updateSummary();
+  }
+
+  function updateSummary() {
+    const detailsEls = Array.from(container.querySelectorAll(".details"));
+    const lineTotals = detailsEls.map(d => parseFloat(d.dataset.price) || 0);
+    const subTotal = lineTotals.reduce((sum, v) => sum + v, 0).toFixed(2);
+    const vat = (subTotal * 0.2).toFixed(2);
+    const total = (+subTotal + +vat).toFixed(2);
+
+    document.querySelector(".sub-total .amount")?.textContent = `£${subTotal}`;
+    document.querySelector(".taxes .amount")?.textContent    = `£${vat}`;
+    document.querySelector(".total .amount")?.textContent    = `£${total}`;
+  }
+});

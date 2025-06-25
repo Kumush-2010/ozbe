@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
 
         try {
-          const res = await fetch("http://localhost:7000/cart", {
+          const res = await fetch("/cart", {
             method: "POST",
             credentials: "include",
             headers: {

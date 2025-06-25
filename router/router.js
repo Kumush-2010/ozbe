@@ -9,7 +9,7 @@ const { getAllCategories } = require('../controllers/categoryController');
 const { addWishlist, removeWishlist, getWishlist } = require('../controllers/wishlistController');
 const express = require('express');
 const { jwtAccessMiddleware } = require('../middlewares/jwt-access.middleware');
-const { addCart } = require('../controllers/cartController');
+const { addCart, getCart } = require('../controllers/cartController');
 const upload = multer({ storage: multer.memoryStorage() })
 
 router.use(express.json());
@@ -86,8 +86,13 @@ router
     removeWishlist
 )
 .get(
-    '/cart',
+    '/carts',
     cart
+)
+.get(
+    '/cart',
+    jwtAccessMiddleware,
+    getCart
 )
 .post(
     '/cart',
