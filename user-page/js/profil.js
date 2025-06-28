@@ -160,6 +160,7 @@ document.getElementById('payBtn')?.addEventListener('click', async function () {
 
   // Cookie'dan userId ni olish
   const userId = getCookie('userId'); // cookie nomi `userId` bo‘lishi kerak
+console.log(userId);
 
   const paymentData = {
     userId: userId,

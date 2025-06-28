@@ -32,39 +32,54 @@ exports.getCart = async (req, res) => {
 
 exports.addCart = async (req, res) => {
   try {
-    // 1) Sessiyadagi userId ni log qilib ko‘ramiz
-    // console.log(' req.headers.cookie:', req.headers.cookie);
-    // console.log('🟢 [addCart] req.sessionID:', req.sessionID);
-    // console.log('🟢 [addCart] req.session:', req.session);
-
     const userId = req.userId;
     const { productId } = req.body;
 
     if (!userId) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Foydalanuvchi aniqlanmadi" });
+      return res.status(401).json({
+        success: false,
+        message: "Foydalanuvchi aniqlanmadi",
+      });
     }
+
     if (!productId) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Mahsulot ID yo‘q" });
+      return res.status(400).json({
+        success: false,
+        message: "Mahsulot ID yo‘q",
+      });
     }
 
-    let item = await Cart.findOne({ user: userId, product: productId });
-    if (item) {
-      item.quantity += 1;
-      await item.save();
-      return res.json({ success: true, message: "Savat yangilandi", item });
+    // 🔍 Savatda shu foydalanuvchining shu mahsuloti bor-yo‘qligini tekshiramiz
+    const existingItem = await Cart.findOne({ user: userId, product: productId });
+
+    if (existingItem) {
+      return res.status(400).json({
+        success: false,
+        message: "❗ Bu mahsulot allaqachon savatda",
+        item: existingItem
+      });
     }
 
-    item = new Cart({ user: userId, product: productId, quantity: 1 });
-    await item.save();
-    await item.populate('product', 'name price images');
-    // console.log('🟢 [addCart] Yangi item yaratildi:', item);
-    res.status(201).json({ success: true, message: 'Savatga qo‘shildi', item });
+    // ➕ Mahsulot savatda bo'lmasa, yangi item yaratamiz
+    const newItem = new Cart({
+      user: userId,
+      product: productId,
+      quantity: 1,
+    });
+
+    await newItem.save();
+    await newItem.populate("product", "name price images");
+
+    return res.status(201).json({
+      success: true,
+      message: "✅ Mahsulot savatga qo‘shildi",
+      item: newItem,
+    });
   } catch (err) {
-    console.error('🔴 [addCart] Xatolik:', err);
-    res.status(500).json({ success: false, message: 'Server xatosi' });
+    console.error("🔴 [addCart] Xatolik:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Server xatosi",
+    });
   }
 };

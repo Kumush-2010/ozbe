@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     const res = await fetch("http://localhost:7000/cart", {
       method: "GET",
-      cache: "no-store"
+      cache: "no-store",
+      credentials: "include"
     });
     const result = await res.json();
 
@@ -134,14 +135,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function updateSummary() {
-    const detailsEls = Array.from(container.querySelectorAll(".details"));
-    const lineTotals = detailsEls.map(d => parseFloat(d.dataset.price) || 0);
-    const subTotal = lineTotals.reduce((sum, v) => sum + v, 0).toFixed(2);
-    const vat = (subTotal * 0.2).toFixed(2);
-    const total = (+subTotal + +vat).toFixed(2);
+  const detailsEls = Array.from(container.querySelectorAll(".details"));
+  const lineTotals = detailsEls.map(d => parseFloat(d.dataset.price) || 0);
+  const subTotal = lineTotals.reduce((sum, v) => sum + v, 0).toFixed(2);
+  const vat = (subTotal * 0.2).toFixed(2);
+  const total = (+subTotal + +vat).toFixed(2);
 
-    document.querySelector(".sub-total .amount")?.textContent = `£${subTotal}`;
-    document.querySelector(".taxes .amount")?.textContent    = `£${vat}`;
-    document.querySelector(".total .amount")?.textContent    = `£${total}`;
-  }
+document.querySelector(".sub-total .amount")?.textContent = `£${subTotal}`;
+document.querySelector(".taxes .amount")?.textContent     = `£${vat}`;
+document.querySelector(".total .amount")?.textContent     = `£${total}`;
+
+}
+
 });
