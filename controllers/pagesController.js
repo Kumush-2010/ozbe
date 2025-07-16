@@ -6,15 +6,15 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANO
 
 
 exports.home = (req, res) => {
-    return res.render('index', { layout: false });
+    return res.render('index', { layout: false, currentPath: '/home' });
 }
 
 exports.shop = (req, res) => {
-    return res.render('shop', { layout: false })
+    return res.render('shop', { layout: false, currentPath: '/shop' })
 }
 
 exports.contact = (req, res) => {
-    return res.render('contact', { layout: false })
+    return res.render('contact', { layout: false, currentPath: '/contact' })
 }
 exports.details = (req, res) =>{
     return res.render('details', { layout: false })

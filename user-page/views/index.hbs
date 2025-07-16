@@ -7,11 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>OZBE</title>
   <link rel="icon" type="image/png" href="/images/logo.webp">
-<!-- Swiper CSS -->
-{{!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" /> --}}
-<!-- Swiper JS -->
-{{!-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> --}}
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
@@ -22,7 +17,7 @@
     html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* ❗️Yon scrollni yo‘q qiladi */
+  overflow-x: hidden;
 }
   .swiper {
   padding-top: 50px;
@@ -30,7 +25,7 @@
 }
 
 .swiper-slide {
-  width: 250px; /* <-- bu muhim! */
+  width: 250px; 
   {{!-- height: 350px; --}}
   border-radius: 12px;
   overflow: hidden;
@@ -47,7 +42,20 @@
   transform: scale(1.1);
   z-index: 2;
 }
+      .nav-link {
+        text-decoration: none;
+        padding-bottom: 4px;
+        border-radius: 2px solid transparent;
+      }
 
+      .nav-link.actie {
+        border-bottom: 2px solid whitesmoke !important;
+        font-weight: bold;
+      }
+
+      .nav-link:hover {
+        border-bottom: 2px solid lightblue ;
+      }
 </style>
 
 </head>
@@ -70,9 +78,9 @@
       <nav class="navbar">
         <ul class="nav-links nav nav-underline">
           <a href="/home" class="logo"><img src="/images/logo.png" class="logo" alt="logo" /></a>
-          <li class="nav-item"><a class="nav-link active" href="/home">Asosiy</a></li>
-          <li class="nav-item"><a class="nav-link active" href="/shop">Do'kon</a></li>
-          <li class="nav-item"><a class="nav-link active" href="/contact">Aloqa</a></li>
+         <li class="nav-item"><a class="nav-link {{#if (eq currentPath '/home')}}active{{/if}}" href="/home">Asosiy</a></li>
+          <li class="nav-item"><a class="nav-link {{#if (eq currentPath '/shop')}}active{{/if}}" href="/shop">Do'kon</a></li>
+          <li class="nav-item"><a class="nav-link {{#if (eq currentPath '/contact')}}active{{/if}}" href="/contact">Aloqa</a></li>
         </ul>
         <div class="icons">
           <a id="openSearch"><i class="fas fa-search"></i></a>
@@ -92,10 +100,8 @@
 <div class="slide">
   <div class="swiper mySwiper custom-slider">
     <div class="swiper-wrapper" id="dynamic-slides">
-      <!-- Fetch orqali JS bu yerga joylaydi -->
     </div>
     
-    <!-- Navigatsiya -->
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
   </div>
@@ -107,11 +113,9 @@
     <h2>BIR KIYIMLARNI KO'RIB CHIQINCHI!</h2>
     <div class="acc-wraper">
       <div class="accordion" id="category-images">
-        <!-- JS orqali rasm joylanadi -->
       </div>
     </div>
 
-    <!-- YANGI MAHSULOTLAR -->
 <h2>Yangilaridan</h2>
 <div class="swiper mySwiper fresh">
   <div class="swiper-wrapper" id="product-slider"></div>
@@ -124,7 +128,6 @@
 </div>
 
 
-<!-- FAQ -->
     <div class="shopify-section shopify-section-group-footer-group">
       <div class="rb-faq-shopify-section">
         <h1 style="text-align: center; padding: 20px 20px 0px 20px; color: #222;"> KO'P BERILADIGAN SAVOLLAR </h1>
@@ -149,7 +152,6 @@
           </div>
         </div>
 
-        <!-- CONTACT INFO -->
         <div class="inner-column">
           <h2>Aloqa ma'lumotlari</h2>
           <ul class="list-info">
@@ -170,16 +172,12 @@
     </div>
   </div>
 
-  <!-- JS -->
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  {{!-- <script src="/user-page/js/script.js"></script> --}}
   <script src="/user-page/js/loading.js"></script>
   <script src="/user-page/js/search.js"></script>
   <script src="/user-page/js/index.js"></script>
 <script src="/user-page/js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-
 
 </body>
 </html>

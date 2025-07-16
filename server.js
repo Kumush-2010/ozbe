@@ -13,7 +13,6 @@ const connectDB = require("./database/db");
 const { jwtAccessMiddleware } = require("./middlewares/jwt-access.middleware");
 const cors = require("cors");
 const router = require("./router/router");
-
 connectDB();
 
 const hbs = create({
@@ -21,9 +20,7 @@ const hbs = create({
   extname: "hbs",
   handlebars: allowInsecurePrototypeAccess(Handlebars),
   helpers: {
-    eq: (a, b) => {
-      return a === b;
-    },
+    eq: (a, b) => a === b
   },
 });
 
@@ -40,11 +37,21 @@ app.use(
   })
 );
 app.use(flash());
+app.use((req, res, next) => {
+  res.locals.currentPath = req.path
+  next()
+})
+
 app.use(express.static("user-page"));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/images", express.static(path.join(__dirname, "images")));
+// app.use('/user-page/views', express.static(path.join(__dirname, 'views')))
+app.use("/user-page", express.static(path.join(__dirname, "/user-page")));
 
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "./user-page/views");
+
 app.use(
   session({
     name: 'connect.sid',
@@ -59,10 +66,6 @@ app.use(
     },
   })
 );
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use("/images", express.static(path.join(__dirname, "images")));
-// app.use('/user-page/views', express.static(path.join(__dirname, 'views')))
-app.use("/user-page", express.static(path.join(__dirname, "/user-page")));
 
 app.use("/", router);
 

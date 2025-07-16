@@ -15,6 +15,23 @@
     <link rel="stylesheet" href="/user-page/css/server.css" />
     <link rel="stylesheet" href="/user-page/css/profil.css" />
     <link rel="stylesheet" href="/user-page/css/search.css" />
+    <style>
+      .nav-link {
+        color: white;
+        text-decoration: none;
+        padding-bottom: 4px;
+        border-radius: 2px solid transparent;
+        transition: border-color 0.3s;
+      }
+
+      .nav-link.actie {
+        border-bottom: 2px solid whitesmoke;
+      }
+
+      .nav-link:hover {
+        border-bottom: 2px solid lightblue;
+      }
+    </style>
   </head>
   <body>
     <header class="header">
@@ -26,10 +43,10 @@
 
       <nav class="navbar">
         <ul class="nav-links nav nav-underline">
-          <a href="/" class="logo"><img src="/images/logo.png" class="logo" alt="" /></a>
-          <li class="nav-item"><a class="nav-link active" href="/">Asosiy</a></li>
-          <li class="nav-item"><a class="nav-link active" href="/shop">Do'kon</a></li>
-          <li class="nav-item"><a class="nav-link active" href="/contact">Aloqa</a></li>
+          <a href="/home" class="logo"><img src="/images/logo.png" class="logo" alt="" /></a>
+          <li class="nav-item"><a class="nav-link {{#if (eq currentPath '/home')}}active{{/if}}" href="/home">Asosiy</a></li>
+          <li class="nav-item"><a class="nav-link {{#if (eq currentPath '/shop')}}active{{/if}}" href="/shop">Do'kon</a></li>
+          <li class="nav-item"><a class="nav-link {{#if (eq currentPath '/contact')}}active{{/if}}" href="/contact">Aloqa</a></li>
         </ul>
         <div class="icons">
           <a id="openSearch"><i class="fas fa-search"></i></a>
@@ -62,31 +79,6 @@
     </div>
 
 {{{body}}}
-<!-- HTML tugma (masalan, header yoki navbar ichida) -->
-{{!-- <button id="authButton" style="padding: 8px 16px; cursor: pointer;">Tekshirilmoqda...</button> --}}
-{{!-- 
-<script>
-  const authBtn = document.getElementById('authButton');
-
-  window.addEventListener('DOMContentLoaded', async () => {
-    try {
-      const res = await fetch('/check-auth');
-      const data = await res.json();
-
-      if (data.loggedIn) {
-        authBtn.textContent = 'Profil';
-        authBtn.onclick = () => window.location.href = '/profil';
-      } else {
-        authBtn.textContent = 'Login';
-        authBtn.onclick = () => window.location.href = '/login';
-      }
-    } catch (err) {
-      console.error('Xatolik:', err);
-      authBtn.textContent = 'Login';
-      authBtn.onclick = () => window.location.href = '/login';
-    }
-  });
-</script> --}}
     <script src="/user-page/js/profil.js"></script>
     <script src="/user-page/js/profil2.js"></script>
     <script src="/user-page/js/script.js"></script>
