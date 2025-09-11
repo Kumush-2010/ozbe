@@ -86,11 +86,11 @@ router
     removeWishlist
 )
 .get(
-    '/carts',
+    '/cart',
     cart
 )
 .get(
-    '/cart',
+    '/cartpage',
     jwtAccessMiddleware,
     getCart
 )
