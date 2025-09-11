@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="uz">
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="OZBE - bu kiyimlari do'koni bo'lib, u yerda siz sifatli va zamonaviy kiyimlarni topishingiz mumkin. Bizning maqsadimiz mijozlarimizga eng yaxshi xizmatni taqdim etish va ularning ehtiyojlarini qondirishdir." />
   <title>OZBE</title>
   <link rel="icon" type="image/png" href="/images/logo.webp">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
@@ -13,6 +14,8 @@
   <link rel="stylesheet" href="/user-page/css/style.css" />
   <link rel="stylesheet" href="/user-page/css/loading.css">
   <link rel="stylesheet" href="/user-page/css/search.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://example-cdn.com">
   <style>
     html, body {
   margin: 0;
@@ -75,9 +78,9 @@
         <button class="next">&#10095;</button>
       </div>
 
-      <nav class="navbar">
+      <nav class="navbar">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
         <ul class="nav-links nav nav-underline">
-          <a href="/home" class="logo"><img src="/images/logo.png" class="logo" alt="logo" /></a>
+          <li><a href="/home" class="logo"><img src="/images/logo.png" class="logo" alt="logo" /></a></li>
          <li class="nav-item"><a class="nav-link {{#if (eq currentPath '/home')}}active{{/if}}" href="/home">Asosiy</a></li>
           <li class="nav-item"><a class="nav-link {{#if (eq currentPath '/shop')}}active{{/if}}" href="/shop">Do'kon</a></li>
           <li class="nav-item"><a class="nav-link {{#if (eq currentPath '/contact')}}active{{/if}}" href="/contact">Aloqa</a></li>
@@ -86,13 +89,13 @@
           <a id="openSearch"><i class="fas fa-search"></i></a>
           <div id="searchModal" class="modal">
             <div class="modal-content">
-              <span id="closeModal" class="close">&times;</span>
+              <span id="closeModal" class="close">&times;</span> 
               <input type="text" placeholder="Search here..." class="search-input" />
               <button class="submit-btn">Search</button>
             </div>
           </div>
-          <a href="/login"><i class="fa-regular fa-user"></i></a>
-          <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
+          <a href="/login" aria-label="login"><i class="fa-regular fa-user"></i></a>
+          <a href="/cart" aria-label="cart"><i class="fa-solid fa-bag-shopping"></i></a>
         </div>
       </nav>
     </header>
@@ -160,12 +163,12 @@
             <li><i class="fas fa-phone"></i>1-234-567-890 <br />1-234-567-890</li>
           </ul>
           <ul class="social-icon-four">
-            <li class="follow">Ozbe ijtimoiy tarmoqlarda:</li>
-            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
-            <li><a href="#"><i class="fab fa-dribbble"></i></a></li>
-            <li><a href="#"><i class="fab fa-pinterest-p"></i></a></li>
+            <li class="follow">O'zbe ijtimoiy tarmoqlarda:</li>
+  <li><a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+  <li><a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
+  <li><a href="https://plus.google.com" target="_blank" aria-label="Google+"><i class="fab fa-google-plus-g"></i></a></li>
+  <li><a href="https://dribbble.com" target="_blank" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a></li>
+  <li><a href="https://pinterest.com" target="_blank" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a></li>
           </ul>
         </div>
       </div>

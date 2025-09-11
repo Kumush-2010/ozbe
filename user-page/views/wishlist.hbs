@@ -1,16 +1,16 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Wishlist</title>
+    <link rel="icon" type="image/png" href="/images/logo.webp" />
 
     <!-- Faqat kerakli CSS fayllari -->
     <link rel="stylesheet" href="/user-page/css/wishlist.css" />
     <link rel="stylesheet" href="/user-page/css/style.css" />
     <link rel="stylesheet" href="/user-page/css/server.css" />
-    {{!-- <link rel="stylesheet" href="/user-page/css/profil.css" /> --}}
-    {{!-- <link rel="stylesheet" href="/user-page/css/myorder.css" /> --}}
+    {{! <link rel="stylesheet" href="/user-page/css/profil.css" /> }}
+    {{! <link rel="stylesheet" href="/user-page/css/myorder.css" /> }}
     <link rel="stylesheet" href="/user-page/css/search.css" />
     <link
       rel="stylesheet"
@@ -39,21 +39,34 @@
           <a href="/home" class="logo">
             <img src="/images/logo.png" class="logo" alt="logo" />
           </a>
-          <li class="nav-item"><a class="nav-link active" href="/home">Asosiy</a></li>
-          <li class="nav-item"><a class="nav-link active" href="/shop">Do'kon</a></li>
-          <li class="nav-item"><a class="nav-link active" href="/contact">Aloqa</a></li>
+          <li class="nav-item"><a
+              class="nav-link active"
+              href="/home"
+            >Asosiy</a></li>
+          <li class="nav-item"><a
+              class="nav-link active"
+              href="/shop"
+            >Do'kon</a></li>
+          <li class="nav-item"><a
+              class="nav-link active"
+              href="/contact"
+            >Aloqa</a></li>
         </ul>
         <div class="icons">
           <a id="openSearch"><i class="fas fa-search"></i></a>
           <div id="searchModal" class="modal">
             <div class="modal-content">
               <span id="closeModal" class="close">&times;</span>
-              <input type="text" placeholder="Search here..." class="search-input" />
+              <input
+                type="text"
+                placeholder="Search here..."
+                class="search-input"
+              />
               <button class="submit-btn">Search</button>
             </div>
           </div>
           <a href="/login"><i class="fa-regular fa-user"></i></a>
-          <a href="../cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
+          <a href="/cart"><i class="fa-solid fa-bag-shopping"></i></a>
         </div>
       </nav>
     </header>
@@ -68,7 +81,8 @@
           <a href="./reviews.html">⭐ Sharhlarim</a>
           <a href="/wishlist">💖 Saralangan</a>
           <a href="/home" class="logout-link">
-            <i class="fa fa-sign-in-alt me-2"></i> <span>Chiqish</span>
+            <i class="fa fa-sign-in-alt me-2"></i>
+            <span>Chiqish</span>
           </a>
         </nav>
       </aside>
