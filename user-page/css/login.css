@@ -37,7 +37,7 @@ html {
   }
   
   .sign-up {
-    padding-top: 50px;
+    padding-top: 20px;
     color: #adadad;
     text-align: center;
     font-size: 13px;
@@ -110,7 +110,7 @@ html {
     text-transform: uppercase;
     overflow: hidden;
     transition: 0.5s;
-    margin-top: 40px;
+    margin-left: 100px;
     letter-spacing: 4px;
   }
   

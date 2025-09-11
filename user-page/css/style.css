@@ -306,7 +306,6 @@ h6 {
   justify-content: center;
 }
 
-
 .custom-slider {
   width: 100%;
   padding: 40px 0;
@@ -364,6 +363,7 @@ h6 {
   background: white;
   color: #000;
 }
+
 
 
 /* category */
@@ -486,4 +486,197 @@ h6 {
   font-weight: bold;
   color: #fff;
   font-size: 0.8rem;
+}
+
+.swiper-pagination-bullet {
+  width: 16px;          /* kamida 16px */
+  height: 16px;         /* kvadrat qilish */
+  margin: 0 6px;        /* oraliq qo‘shish */
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #007aff; /* aktiv holatda rangni ajratish */
+}
+@media (max-width: 768px) {
+  .swiper-pagination-bullet {
+    width: 24px;
+    height: 24px;
+    margin: 0 8px;
+  }
+}
+
+
+/* 768px dan kichik ekranlar uchun (planshet + telefon) */
+@media (max-width: 768px) {
+
+  h1 {
+    font-size: 28px;
+    line-height: 40px;
+  }
+
+  h2 {
+    font-size: 24px;
+    width: 90%;
+  }
+
+  h4 {
+    font-size: 16px;
+  }
+
+  .section-p1 {
+    padding: 20px 30px;
+  }
+
+  .navbar {
+    flex-direction: column;
+    padding: 15px;
+    gap: 10px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .icons {
+    justify-content: center;
+  }
+
+  .announcement-bar .prev,
+  .announcement-bar .next {
+    font-size: 1rem;
+    left: 10px;
+    right: 10px;
+  }
+
+  /* Slider */
+  .custom-slide {
+    height: 400px;
+    width: 90%;
+  }
+
+  .slide-content h3 {
+    font-size: 16px;
+  }
+
+  .slide-content button {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  /* Accordion category */
+  .acc-wraper {
+    margin-left: 0;
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .accordion {
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+  }
+
+  .accordion > div {
+    width: 100%;
+    height: 200px;
+    max-width: 100%;
+  }
+
+  .accordion div p {
+    font-size: 1rem;
+    writing-mode: horizontal-tb !important;
+    transform: translate(-50%, -50%) rotate(0deg) !important;
+  }
+
+  /* Product Card */
+  .product-card {
+    width: 90%;
+    height: auto;
+  }
+
+  .product-card img {
+    height: 260px;
+  }
+
+  .product-info h3,
+  .product-info .price {
+    font-size: 14px;
+  }
+
+  /* FAQ */
+  .rb-faq-question {
+    font-size: 1.2rem;
+    padding: 10px 15px;
+  }
+
+  .rb-faq-answer {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+
+  /* Footer */
+  .inner-column {
+    padding: 30px 15px;
+    text-align: center;
+  }
+
+  .inner-column h2 {
+    font-size: 20px;
+  }
+
+  .list-info {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .list-info li {
+    padding-left: 30px;
+    font-size: 14px;
+  }
+
+  .social-icon-four {
+    justify-content: center;
+  }
+
+  .social-icon-four li a {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+}
+
+/* 480px dan kichik ekranlar uchun (telefonlar) */
+@media (max-width: 480px) {
+  h2 {
+    font-size: 20px;
+  }
+
+  .slide-content h3 {
+    font-size: 14px;
+  }
+
+  .slide-content button {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .accordion > div {
+    height: 150px;
+  }
+
+  .product-card img {
+    height: 220px;
+  }
+
+  .product-info h3,
+  .product-info .price {
+    font-size: 12px;
+  }
+
+  .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+  }
 }
