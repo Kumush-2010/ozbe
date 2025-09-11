@@ -125,14 +125,18 @@ document.addEventListener('DOMContentLoaded', async () => {
       card.innerHTML = `
         <div class="shop-card-image">
           <img src="${image1}" alt="${product.name}" />
+           <button class="wishlist-btn" data-product-id="${product._id}" data-action="wishlist">
+           <i class="fa-regular fa-heart"></i>
+            </button>
         </div>
         <div class="shop-card-content">
-          <h3 class="shop-card-title">${product.name}</h3>
-          <p class="shop-card-price">${parseInt(product.price).toLocaleString('uz-UZ')} so'm</p>
+        <div class="shop-card-info"> 
+        <div>
+        <h3 class="shop-card-title">${product.name}</h3>
+        <p class="shop-card-price">${parseInt(product.price).toLocaleString('uz-UZ')} so'm</p>
         </div>
-        <div class="shop-card-actions">
-         <button class="wishlist-btn" data-product-id="${product._id}" data-action="wishlist">🤍</button>
-         <button class="btn-cart" data-id="${product._id}" data-action="cart">🛒</button>
+        <button class="btn-cart" data-id="${product._id}" data-action="cart"><i class="fa-solid fa-cart-shopping" style="color: white"></i></button>
+        </div>
         </div>
       `;
 
@@ -140,10 +144,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       card.addEventListener('mouseenter', () => { imgEl.src = image2 });
       card.addEventListener('mouseleave', () => { imgEl.src = image1 });
 
-      const wishlistBtn = card.querySelector('.wishlist-btn');
+      const wishlistBtn = card.querySelector('.wishlist-btn'); 
       wishlistBtn.addEventListener('click', async () => {
         const productId = wishlistBtn.dataset.productId;
-        const isLiked = wishlistBtn.textContent === '❤️';
+        const icon = wishlistBtn.querySelector('i');
+        const isLiked = wishlistBtn.classList.contains('fa-solid');
         const url = isLiked ? '/wishlists/${id}' : '/wishlist/add';
 
         try {
@@ -156,7 +161,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
           const result = await res.json();
           if (result.success) {
-            wishlistBtn.textContent = isLiked ? '🤍' : '❤️';
+            icon.classList.toggle('fa-regular', isLiked);
+            icon.classList.toggle('fa-solid', !isLiked);
+            icon.style.color = isLiked ? '#555' : '#ff4d6d';
+
+            icon.classList.add('animate')
+            setTimeout(() => icon.classList.remove('animate'), 400);
           } else {
             alert('Amalni bajara olmadik!');
           }

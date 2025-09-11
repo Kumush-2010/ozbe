@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       }));
       renderCart(cartItems);
     } else {
-      container.innerHTML = "<li><p>Savat bo‘sh.</p></li>";
+      container.innerHTML = "<li><p>Savat bo‘sh.</p></li>";``
     }
-  } catch (error) {
+  } catch (error){
     console.error("Savatni yuklashda xatolik:", error);
     container.innerHTML = "<li><p>Ma’lumot olib kelishda xatolik.</p></li>";
   }
