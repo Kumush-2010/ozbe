@@ -239,6 +239,7 @@ h6 {
   flex-wrap: wrap;
   padding: 0;
   position: relative;
+  justify-content: center;
 }
 
 .social-icon-four li {

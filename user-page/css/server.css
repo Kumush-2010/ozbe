@@ -34,7 +34,7 @@ body {
 
 .sidebar a.active,
 .sidebar a:hover {
-  background-color: #00bcd4;
+  background-color: rgb(28 40 75);
   color: white;
 }
 
