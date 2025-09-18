@@ -95,7 +95,7 @@ router
     getCart
 )
 .post(
-    '/cart',
+    '/addCart',
     jwtAccessMiddleware,
     addCart
 )
