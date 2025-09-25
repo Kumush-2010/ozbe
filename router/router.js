@@ -10,6 +10,7 @@ const { addWishlist, removeWishlist, getWishlist } = require('../controllers/wis
 const express = require('express');
 const { jwtAccessMiddleware } = require('../middlewares/jwt-access.middleware');
 const { addCart, getCart } = require('../controllers/cartController');
+const { checkoutPage, checkout } = require('../controllers/ordersController');
 const upload = multer({ storage: multer.memoryStorage() })
 
 router.use(express.json());
@@ -98,6 +99,14 @@ router
     '/addCart',
     jwtAccessMiddleware,
     addCart
+)
+.get(
+    '/checkout',
+    checkoutPage
+)
+.post(
+    '/chekout',
+    checkout
 )
 
 module.exports = router
