@@ -1,164 +1,100 @@
-
-/* Map styling */
-#map {
-    height: 500px;
-    width: 30%;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-}
 body {
-    background-color: #f5f5f5;
-    color: #333;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
+    font-family: 'Inter', sans-serif;
+    background: #f9fafc;
+    margin: 0;
+    padding: 40px;
 }
-.header {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #e53935;
+
+.checkout-container {
+    max-width: 1100px;
+    margin: auto;
 }
-.section {
-    background-color: white;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-.section-title {
-    font-weight: bold;
-    margin-bottom: 15px;
+
+.progress-bar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    margin-bottom: 30px;
 }
-.option {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-    align-items: center;
-}
-.option:last-child {
-    border-bottom: none;
-}
-.option-label {
-    display: flex;
-    align-items: center;
-}
-.option-price {
-    font-weight: bold;
-    color: #e53935;
-}
-.selected {
-    background-color: #fff8e1;
-}
-.badge {
-    background-color: #e53935;
-    color: white;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 12px;
-}
-.input-group {
-    margin-bottom: 15px;
-}
-.input-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-.input-field {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-}
-.row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-.col {
+
+.progress-bar .step {
     flex: 1;
+    text-align: center;
+    position: relative;
+    font-weight: 600;
+    color: #ccc;
 }
-.checkbox-option {
+
+.progress-bar .step.active {
+    color: #2563eb;
+}
+
+.checkout-box {
+    display: flex;
+    gap: 30px;
+}
+
+.cart .order-form {
+    flex: 1;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.cart .item {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    justify-content: space-between;
+    margin-bottom: 15px;
 }
-.checkbox-option input {
-    margin-right: 10px;
+
+.cart .item img {
+    width: 50px;
+    border-radius: 6px;
 }
-.notes-input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    min-height: 80px;
-    resize: vertical;
+
+.cart .total {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 700;
 }
-.btn {
-    background-color: #e53935;
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 16px;
-    width: 100%;
-    margin-top: 15px;
-    cursor: pointer;
+
+.order-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
-.address-card {
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    cursor: pointer;
-}
-.address-card:hover {
-    background-color: #f9f9f9;
-}
-.address-title {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-.current-icon {
-    color: #e53935;
-    margin-left: 5px;
-}
-.hidden {
+
+.form-step.hidden {
     display: none;
 }
-.payment-methods {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 10px;
-}
-.payment-method {
-    background-color: #f0f0f0;
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 14px;
-}
-.order-summary {
-    width: 100%;
-    border-collapse: collapse;
-}
-.order-summary td {
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
-}
-.order-summary .total {
-    font-weight: bold;
-    font-size: 18px;
 
+.order-form input,
+.order-form select {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.btn-order,
+.next-btn,
+.prev-btn {
+    padding: 12px 18px;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-order:hover,
+.next-btn:hover,
+.prev-btn:hover {
+    background: #1e40af;
+}
+
+.step-action {
+    display: flex;
+    justify-content: space-between;
 }
