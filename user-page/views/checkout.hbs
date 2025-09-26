@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rasmiylashtirish</title>
+
+    <link rel="stylesheet" href="/user-page/css/rasmiy.css">
+</head>
+<body>
+
+    <div class="checkout-container">
+        <div class="progressbar">
+            <div class="step active" data-step="1">Savat</div>
+            <div class="step" data-step="2">Yetkazib berish</div>
+            <div class="step" data-step="3">To'lov</div>
+            <div class="step" data-step="4">Tasdiq</div>
+        </div> 
+
+        <div class="checkout-box">
+            <div class="cart">
+                <h2>Savatingiz</h2>
+                {{#each cart}}
+                <div class="item">
+                    <img src="{{this.image}}" alt="{{this.name}}">
+                    <div>
+                        <p>{{this.name}}</p>
+                        <span>{{this.size}}</span>
+                    </div>
+                    <span class="price">{{this.price}} so'm</span>
+                </div>
+                {{/each}}
+                <div class="total">
+                    <strong>Jami:</strong> {{total}} so'm
+            </div>
+        </div>
+
+{{!-- Buyurtma formasi --}}
+        <div class="order-form">
+            <h2>Buyurtma ma'lumotlari</h2>
+            <form id="checkoutForm" method="POST" action="/checkout">
+                {{!-- Step 1: Shaxsiy ma'lumotlar --}}
+                <div class="form-step" data-step="1">
+                    <input type="text" name="fullName" placeholder="Ism Familiya" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="text" name="phone" placeholder="Telefon raqam" required>
+                    <button type="button" class="next-btn">Keyingi</button>
+                </div>
+
+                {{!-- Step 2: Yetkazib berish manzili --}}
+                <div class="form-step hidden" data-step="2">
+                    <select name="delivery" required>
+                        <option value="courier">Kuryer (shahar ichida)</option>
+                        <option value="post">Pochtada</option>
+                    </select>
+                    <input type="text" name="address" placeholder="Manzil" required>
+                    <div class="step-actions">
+                        <button type="button" class="prev-btn">Orqaga</button>
+                        <button type="button" class="next-btn">Keyingi</button>
+                    </div>
+                </div>
+
+                {{!-- Step 3: To'lov --}}
+                <div class="form-step hidden" data-step="3">
+                    <select name="payment" required>
+                        <option value="card">Karta orqali (UZCARD/HUMO)</option>
+                        <option value="cash">Naqd</option>
+                    </select>
+                    <div class="step-actions">
+                        <button type="button" class="prev-btn">Orqaga</button>
+                        <button type="button" class="next-btn">Keyingi</button>
+                    </div>
+                </div>
+
+                {{!-- Step 4: Tasdiq --}}
+                <div class="form-step hidden" data-step="4">
+                    <p>Buyurtmangizni tasdiqlang</p>
+                    <button type="button" class="prev-btn">Orqaga</button>
+                    <button type="submit" class="btn-order">Buyurtma berish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+   
+      
+</body>
+<!-- AngularJS Core -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+<!-- AngularJS Messages -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-messages.min.js"></script>
+
+<!-- AngularJS Aria (ngMaterial uchun kerak) -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-aria.min.js"></script>
+
+<!-- AngularJS Animate (ngMaterial uchun kerak) -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.min.js"></script>
+
+<!-- Angular Material JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.2/angular-material.min.js"></script>
+
+<!-- Angular Material CSS -->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.2.2/angular-material.min.css">
+
+<!-- Google Maps API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5tGuetQPZat9QMcDpDhGLhJ5WBTM6t-Y"></script> <!-- API kalitini bu yerga qo'ying -->
+
+<!-- Main AngularJS Script -->
+<script src="/user-page/js/rasmiy.js"></script> <!-- Bu yerda sizning angular kod faylingiz -->
+
+</html>
+
