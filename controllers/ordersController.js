@@ -1,14 +1,23 @@
 const Order = require('../models/orders');
-const { cart } = require('./pagesController');
+// const { cart } = require('./pagesController');
 
-exports.checkoutPage = (req, res) => {
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
-    res.render('checkout', { cart, total });
+exports.checkoutPage = async (req, res) => {
+    try {
+        const cart = await req.session.cart || [];
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+        res.render('checkout', { cart, total });
+    } catch (error) {
+        console.error('Checkout sahifasini yuklashda xatolik:', error);
+        res.status(500).send('Serverda xatolik yuz berdi.');
+    }
 }
 
 exports.checkout = async (req, res) => {
     try {
+        const cart = await req.session.cart || [];
         const total = cart.reduce((sum, item) => sum + item.price, 0);
+        
         const newOrder = new Order({
             fullName: req.body.fullName,
             email: req.body.email,
