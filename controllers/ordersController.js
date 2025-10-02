@@ -6,7 +6,7 @@ exports.checkoutPage = async (req, res) => {
         const cart = await req.session.cart || [];
         const total = cart.reduce((sum, item) => sum + item.price, 0);
 
-        res.render('checkout', { cart, total });
+        res.render('checkout', { cart, total, layout: false });
     } catch (error) {
         console.error('Checkout sahifasini yuklashda xatolik:', error);
         res.status(500).send('Serverda xatolik yuz berdi.');

@@ -1,6 +1,6 @@
-document.addEventListener('DOMContentLoaded', ()=> {
+  document.addEventListener('DOMContentLoaded', () => {
     const steps = document.querySelectorAll('.form-step');
-    const progressSteps = document.querySelectorAll('.progressbar .step');
+    const progressSteps = document.querySelectorAll('.progress-bar .step');
     let currentStep = 0;
 
     function showStep(index) {
@@ -23,12 +23,10 @@ document.addEventListener('DOMContentLoaded', ()=> {
         btn.addEventListener('click', () => {
             if (currentStep > 0) {
                 currentStep--;
-                
                 showStep(currentStep);
             }
         });
     });
 
     showStep(currentStep);
-})
-
+});

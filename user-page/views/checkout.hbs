@@ -8,14 +8,33 @@
     <link rel="stylesheet" href="/user-page/css/rasmiy.css">
 </head>
 <body>
-
+{{!-- {{> progress-bar}}  --}}
     <div class="checkout-container">
-        <div class="progress-bar">
-            <div class="step active" data-step="1">Savat</div>
-            <div class="step" data-step="2">Yetkazib berish</div>
-            <div class="step" data-step="3">To'lov</div>
-            <div class="step" data-step="4">Tasdiq</div>
-        </div> 
+       {{!-- <div class="progress-bar">
+    <div class="step active" data-step="1">Savat</div>
+    <div class="step" data-step="2">Yetkazib berish</div>
+    <div class="step" data-step="3">To'lov</div>
+    <div class="step" data-step="4">Tasdiq</div>
+</div> --}}
+<div class="progress-bar">
+  <div class="step active" data-step="1">
+    <span class="circle">1</span>
+    <span class="label">Savat</span>
+  </div>
+  <div class="step" data-step="2">
+    <span class="circle">2</span>
+    <span class="label">Yetkazib berish</span>
+  </div>
+  <div class="step" data-step="3">
+    <span class="circle">3</span>
+    <span class="label">To'lov</span>
+  </div>
+  <div class="step" data-step="4">
+    <span class="circle">4</span>
+    <span class="label">Tasdiq</span>
+  </div>
+</div>
+
 
         <div class="checkout-box">
             <div class="cart">
@@ -35,7 +54,7 @@
             </div>
         </div>
 
-{{!-- Buyurtma formasi --}}
+{{!-- Buyurtma formasi --}}      
         <div class="order-form">
             <h2>Buyurtma ma'lumotlari</h2>
             <form id="checkoutForm" method="POST" action="/checkout">
