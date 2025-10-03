@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let cartItems = [];
 
   try {
-    const res = await fetch("http://localhost:7000/cart", {
+    const res = await fetch("/cart", {
       method: "GET",
       cache: "no-store",
       credentials: "include"
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         e.preventDefault();
         const cartId = e.currentTarget.dataset.cartId;
         try {
-          const resp = await fetch(`http://localhost:7000/carts/${cartId}`, {
+          const resp = await fetch(`/carts/${cartId}`, {
             method: "DELETE",
             credentials: "include"
           });

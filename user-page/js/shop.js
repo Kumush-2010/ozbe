@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // 🟡 Kategoriyalar
-  fetch('http://localhost:7000/category')
+  fetch('/category')
     .then(res => res.json())
     .then(data => {
       const categories = Array.isArray(data) ? data : data.categories;
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     .catch(err => console.error('Kategoriyalarni yuklashda xatolik:', err));
 
   // 🟢 Mahsulotlar
-  fetch('http://localhost:7000/products', { cache: 'no-store' })
+  fetch('/products', { cache: 'no-store' })
     .then(res => res.json())
     .then(products => {
       allProducts = products;

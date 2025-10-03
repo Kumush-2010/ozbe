@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const container = document.getElementById("wishlist-container");
 
   try {
-    const res = await fetch("http://localhost:7000/wishlists", {
+    const res = await fetch("/wishlists", {
       method: "GET",
       credentials: "include",
       cache: "no-store"
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (!id) return;
 
         try {
-          const delRes = await fetch(`http://localhost:7000/wishlists/${id}`, {
+          const delRes = await fetch(`/wishlists/${id}`, {
             method: "DELETE",
             credentials: "include"
           });

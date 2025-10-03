@@ -87,7 +87,7 @@ fetch('/category')
 
 
   // Slider
-   const apiURL = 'http://localhost:7000/products'; // O'zingizning API manzilingiz
+   const apiURL = '/products'; // O'zingizning API manzilingiz
 
   fetch(apiURL)
     .then(res => res.json())
@@ -131,5 +131,4 @@ fetch('/category')
     })
     .catch(err => {
       console.error('Xatolik:', err);
-
     });
