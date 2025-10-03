@@ -49,7 +49,7 @@
 
 
   // category
-fetch('http://localhost:7000/category')
+fetch('/category')
   .then(res => res.json())
   .then(data => {
     const wrapper = document.getElementById('category-images');
@@ -131,4 +131,5 @@ fetch('http://localhost:7000/category')
     })
     .catch(err => {
       console.error('Xatolik:', err);
+
     });
