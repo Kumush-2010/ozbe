@@ -105,7 +105,7 @@ router
     checkoutPage
 )
 .post(
-    '/chekout',
+    '/checkout',
     checkout
 )
 
