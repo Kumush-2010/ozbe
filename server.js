@@ -20,7 +20,12 @@ const hbs = create({
   extname: "hbs",
   handlebars: allowInsecurePrototypeAccess(Handlebars),
   helpers: {
-    eq: (a, b) => a === b
+    eq: (a, b) => a === b,
+    json: (ctx) => JSON.stringify(ctx || {}),
+    formatCurrency: (val) => {
+      if (!val && val !== 0) return '';
+      return new Intl.NumberFormat('uz-UZ').format(val) + " so'm";
+    }
   },
 });
 
