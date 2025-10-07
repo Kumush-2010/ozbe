@@ -1,5 +1,4 @@
-
-const Cart = require("../models/cart");
+const Cart = require("../models/cart")
 
 exports.getCart = async (req, res) => {
   try {
@@ -30,9 +29,10 @@ exports.getCart = async (req, res) => {
   }
 };
 
-exports.addCart = async (req, res) => {
+  exports.addCart = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.id;
+    const cartId = req.user.cartId;
     const { productId } = req.body;
 
     if (!userId) {
@@ -48,24 +48,20 @@ exports.addCart = async (req, res) => {
         message: "Mahsulot ID yo‘q",
       });
     }
+  
+    const cart = await Cart.findById(cartId)
 
-    // 🔍 Savatda shu foydalanuvchining shu mahsuloti bor-yo‘qligini tekshiramiz
-    const existingItem = await Cart.findOne({ user: userId, product: productId });
-
-    if (existingItem) {
-      return res.status(400).json({
-        success: false,
-        message: "❗ Bu mahsulot allaqachon savatda",
-        item: existingItem
+    
+    if (cart.user == userId && cart.product == productId) {
+      return res.status(200).json({
+        success: true,
+        message: "🛒 Mahsulot allaqachon savatda mavjud"
       });
     }
 
-    // ➕ Mahsulot savatda bo'lmasa, yangi item yaratamiz
-    const newItem = new Cart({
-      user: userId,
-      product: productId,
-      quantity: 1,
-    });
+    const newItem = await Cart.findByIdAndUpdate(
+      
+    ) 
 
     await newItem.save();
     await newItem.populate("product", "name price images");

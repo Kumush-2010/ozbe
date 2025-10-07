@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     address: { type: String },
     role: { type: String, enum: ["user"], default: "user" },
     lastLogin: { type: Date, default: Date.now },
-    cart: { type: String },
+    cart: { type: mongoose.Schema.Types.ObjectId, ref: "Cart" },
     image: { type: String },
     birth: { type: String },
     gender: { type: String, enum: ['ayol', 'erkak'],},

@@ -15,7 +15,6 @@ exports.getWishlist = async (req, res) => {
       .find({ userId })
       .populate('productId') // mahsulot haqida to‘liq ma’lumot
 
-      console.log(items)
     res.json(items)
   } catch (error) {
     console.error("Wishlistni olishda xatolik:", error);

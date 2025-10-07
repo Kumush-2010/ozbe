@@ -11,7 +11,7 @@ const token = req.cookies?.token;
         }
 
         const user = jwt.verify(token, process.env.JWT_SECRET);
-        req.userId = user.id;
+
         req.user = user;
         next();
     } catch (error) {

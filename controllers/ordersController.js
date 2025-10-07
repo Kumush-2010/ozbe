@@ -23,7 +23,7 @@ exports.checkout = async (req, res) => {
     const total = cart.reduce((sum, item) => sum + item.price, 0);
 
     const user = req.session.user;
-    if (!user) return res.redirect('/login');
+    if (!user) return res.redirect('/loginn');
 
     const newOrder = new Order({
       userId: user._id,

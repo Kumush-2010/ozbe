@@ -2,6 +2,7 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const sendSMS = require("../utils/eskiz");
+const Cart = require("../models/cart");
 const codes = new Map();
 
 function generateCode() {
@@ -58,8 +59,16 @@ exports.register = async (req, res) => {
     password: hashedPassword,
   });
 
+  const cart = await Cart.create({
+    user: user._id,
+    product: [],
+    quantity: 0
+  })
+  user.cart = cart._id;
+  await user.save();
+
   const token = jwt.sign(
-    { id: user._id, phone: user.phone, role: user.role },
+    { id: user._id, phone: user.phone, role: user.role, cartId: cart._id },
     process.env.JWT_SECRET,
     { expiresIn: "2d" }
   );
@@ -78,7 +87,11 @@ exports.register = async (req, res) => {
 // JWT token yaratish
 const generateToken = (user) => {
   return jwt.sign(
-    { id: user._id, phone: user.phone, role: user.role },
+    { 
+      id: user._id,
+      phone: user.phone, 
+      role: user.role,
+    },
     process.env.JWT_SECRET,
     { expiresIn: "2d" }
   );
@@ -109,7 +122,7 @@ exports.login = async (req, res) => {
     } 
 
     const token = jwt.sign(
-      { id: user._id, role: user.role },
+      { id: user._id, role: user.role, cartId: user.cart},
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
