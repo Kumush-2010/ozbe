@@ -60,7 +60,10 @@ exports.getCart = async (req, res) => {
     }
 
     const newItem = await Cart.findByIdAndUpdate(
-      
+      {
+        product: productId,
+        quantity: quantity,
+      }
     ) 
 
     await newItem.save();

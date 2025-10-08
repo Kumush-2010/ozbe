@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const product = require("./product");
-const { required } = require("joi");
 
 const cartSchema = new mongoose.Schema({
   user: {
