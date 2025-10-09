@@ -4,22 +4,25 @@ document.addEventListener("DOMContentLoaded", async () => {
   let cartItems = [];
 
   try {
-    const res = await fetch("/cart", {
+    const res = await fetch("/cartpage", {
       method: "GET",
       cache: "no-store",
-      credentials: "include"
+      credentials: "include",
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+      }
     });
     const result = await res.json();
 
-    if (result.success && Array.isArray(result.items)) {
-      cartItems = result.items.map(item => ({
+    if (result.success) {
+      cartItems = result?.items?.map(item => ({
         ...item.product,
         _cartId: item._id,
         quantity: item.quantity
       }));
       renderCart(cartItems);
     } else {
-      container.innerHTML = "<li><p>Savat bo‘sh.</p></li>";``
+      container.innerHTML = "<li><p>Savat bo‘sh.</p></li>";
     }
   } catch (error){
     console.error("Savatni yuklashda xatolik:", error);
@@ -51,7 +54,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
         <div class="details" data-price="${(unitPrice * qty).toFixed(2)}">
           <h3>${item.name}</h3>
-          <p>${item.description || ""}</p>
         </div>
         <div class="inner_container">
           <div class="col_1of2 align-center picker">
@@ -60,12 +62,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <i class="fas fa-plus"></i>
               </a>
               <div class="col_1of2 quantity-text">
-                <p><span class="current_quantity">${qty}</span> @ £${unitPrice.toFixed(2)}</p>
+                <p><span class="current_quantity">${qty}</span></p>
               </div>
               <a href="#" class="btn-quantity minus" data-cart-id="${item._cartId}">
                 <i class="fas fa-minus"></i>
               </a>
             </p>
+            <p> ${unitPrice.toFixed(2)} so'm</p>
             <input
               type="hidden"
               class="quantity_field"
@@ -141,10 +144,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const vat = (subTotal * 0.2).toFixed(2);
   const total = (+subTotal + +vat).toFixed(2);
 
-document.querySelector(".sub-total .amount")?.textContent = `£${subTotal}`;
-document.querySelector(".taxes .amount")?.textContent     = `£${vat}`;
-document.querySelector(".total .amount")?.textContent     = `£${total}`;
-
+document.querySelector(".sub-total .amount")?.textContent === `£${subTotal}`;
+document.querySelector(".taxes .amount")?.textContent     === `£${vat}`;
+document.querySelector(".total .amount")?.textContent     === `£${total}`;
 }
 
 });

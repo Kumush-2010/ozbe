@@ -107,80 +107,71 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // 🖼 Mahsulotlar renderi
-  function renderProducts(products) {
-    productContainer.innerHTML = '';
+ function renderProducts(products) {
+  productContainer.innerHTML = '';
 
-    if (products.length === 0) {
-      productContainer.innerHTML = '<p>Mahsulot topilmadi.</p>';
-      return;
-    }
-
-    products.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'shop-card';
-
-      const image1 = product.images?.[0] || 'images/placeholder.jpg';
-      const image2 = product.images?.[1] || image1;
-
-      card.innerHTML = `
-        <div class="shop-card-image">
-          <img src="${image1}" alt="${product.name}" />
-           <button class="wishlist-btn" data-product-id="${product._id}" data-action="wishlist">
-           <i class="fa-regular fa-heart"></i>
-            </button>
-        </div>
-        <div class="shop-card-content">
-        <div class="shop-card-info"> 
-        <div>
-        <h3 class="shop-card-title">${product.name}</h3>
-        <p class="shop-card-price">${parseInt(product.price).toLocaleString('uz-UZ')} so'm</p>
-        </div>
-        <button class="btn-cart" data-id="${product._id}" data-action="cart"><i class="fa-solid fa-cart-shopping" style="color: white"></i></button>
-        </div>
-        </div>
-      `;
-
-      const imgEl = card.querySelector('img');
-      card.addEventListener('mouseenter', () => { imgEl.src = image2 });
-      card.addEventListener('mouseleave', () => { imgEl.src = image1 });
-
-      const wishlistBtn = card.querySelector('.wishlist-btn'); 
-      wishlistBtn.addEventListener('click', async () => {
-        const productId = wishlistBtn.dataset.productId;
-        const icon = wishlistBtn.querySelector('i');
-        const isLiked = wishlistBtn.classList.contains('fa-solid');
-        const url = isLiked ? '/wishlists/${id}' : '/wishlist/add';
-
-        try {
-          const res = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ productId }),
-            credentials: 'include'
-          });
-
-          const result = await res.json();
-          if (result.success) {
-            icon.classList.toggle('fa-regular', isLiked);
-            icon.classList.toggle('fa-solid', !isLiked);
-            icon.style.color = isLiked ? '#555' : '#ff4d6d';
-
-            icon.classList.add('animate')
-            setTimeout(() => icon.classList.remove('animate'), 400);
-          } else {
-            alert('Amalni bajara olmadik!');
-          }
-        } catch (error) {
-          console.error('Wishlist xatolik:', error);
-        }
-      });
-
-      productContainer.appendChild(card);
-    });
+  if (products.length === 0) {
+    productContainer.innerHTML = '<p>Mahsulot topilmadi.</p>';
+    return;
   }
 
-  function capitalizeFirstLetter(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+  products.forEach(product => {
+    const card = document.createElement('div');
+    card.className = 'shop-card';
+
+    const image1 = product.images?.[0] || 'images/placeholder.jpg';
+    const image2 = product.images?.[1] || image1;
+
+    card.innerHTML = `
+      <div class="shop-card-image">
+        <img src="${image1}" alt="${product.name}" />
+        <button class="wishlist-btn" data-product-id="${product._id}">
+          <i class="fa-regular fa-heart"></i>
+        </button>
+      </div>
+      <div class="shop-card-content">
+        <div class="shop-card-info">
+          <div>
+            <h3>${product.name}</h3>
+            <p>${parseInt(product.price).toLocaleString('uz-UZ')} so'm</p>
+          </div>
+          <button class="btn-cart" data-id="${product._id}">
+            <i class="fa-solid fa-cart-shopping" style="color: white"></i>
+          </button>
+        </div>
+      </div>
+    `;
+
+    // Hover animatsiya
+    const imgEl = card.querySelector('img');
+    card.addEventListener('mouseenter', () => { imgEl.src = image2 });
+    card.addEventListener('mouseleave', () => { imgEl.src = image1 });
+
+    productContainer.appendChild(card);
+  });
+}
+
+// ✅ Faqat bitta marta tinglovchi qo‘shiladi
+productContainer.addEventListener("click", async e => {
+  const btn = e.target.closest(".btn-cart");
+  if (!btn) return;
+
+  const productId = btn.dataset.id;
+  if (!productId) return alert("Mahsulot ID topilmadi!");
+
+  try {
+    const res = await fetch("/addCart", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ productId }),
+    });
+
+    const result = await res.json();
+    alert(result.success ? "Mahsulot savatga qo‘shildi ✅" : result.message || "Xatolik!");
+  } catch (err) {
+    console.error("Savatga qo‘shishda xatolik:", err);
+    alert("Server bilan aloqa muvaffaqiyatsiz.");
   }
 });
-
+})
