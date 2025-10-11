@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           <h3>${item.name}</h3>
         </div>
         <div class="inner_container">
+            <p> ${unitPrice.toFixed(2)} so'm</p>
           <div class="col_1of2 align-center picker">
             <p>
               <a href="#" class="btn-quantity plus" data-cart-id="${item._cartId}">
@@ -64,11 +65,12 @@ document.addEventListener("DOMContentLoaded", async () => {
               <div class="col_1of2 quantity-text">
                 <p><span class="current_quantity">${qty}</span></p>
               </div>
+              <p>
               <a href="#" class="btn-quantity minus" data-cart-id="${item._cartId}">
                 <i class="fas fa-minus"></i>
               </a>
+              </p>
             </p>
-            <p> ${unitPrice.toFixed(2)} so'm</p>
             <input
               type="hidden"
               class="quantity_field"
@@ -84,9 +86,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         e.preventDefault();
         const cartId = e.currentTarget.dataset.cartId;
         try {
-          const resp = await fetch(`/carts/${cartId}`, {
-            method: "DELETE",
-            credentials: "include"
+          const resp = await fetch(`/cart/${cartId}`, {
+            method: "PUT",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ productId  }),
           });
           const data = await resp.json();
           if (data.success) {

@@ -9,7 +9,7 @@ const { getAllCategories } = require('../controllers/categoryController');
 const { addWishlist, removeWishlist, getWishlist } = require('../controllers/wishlistController');
 const express = require('express');
 const { jwtAccessMiddleware } = require('../middlewares/jwt-access.middleware');
-const { addCart, getCart } = require('../controllers/cartController');
+const { addCart, getCart, removeCart } = require('../controllers/cartController');
 const { checkoutPage, checkout } = require('../controllers/ordersController');
 const upload = multer({ storage: multer.memoryStorage() })
 
@@ -100,6 +100,11 @@ router
     jwtAccessMiddleware,
     addCart
 )
+.put(
+    '/cart/:id',
+    removeCart
+)
+
 .get(
     '/checkout',
     checkoutPage
