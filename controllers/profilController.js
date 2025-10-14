@@ -5,6 +5,11 @@ require("dotenv").config();
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
 
+   
+exports.profil = (req, res) => {
+    res.redirect('/profil', { user: req.user });
+}
+
 exports.profil = async (req, res) => {
      const userId = req.cookies.userId;
   if (!userId) {

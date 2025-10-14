@@ -8,7 +8,7 @@ const multer = require("multer");
 const { getAllCategories } = require('../controllers/categoryController');
 const { addWishlist, removeWishlist, getWishlist } = require('../controllers/wishlistController');
 const express = require('express');
-const { jwtAccessMiddleware } = require('../middlewares/jwt-access.middleware');
+const { jwtAccessMiddleware, requireLogin } = require('../middlewares/jwt-access.middleware');
 const { addCart, getCart, removeCart } = require('../controllers/cartController');
 const { checkoutPage, checkout } = require('../controllers/ordersController');
 const upload = multer({ storage: multer.memoryStorage() })
@@ -18,10 +18,12 @@ router.use(express.json());
 router
 .get(
     '/login',
+    jwtAccessMiddleware,
     loginPage
 )
 .post(
     '/login',
+    jwtAccessMiddleware,
     login
 )
 .get(
@@ -30,16 +32,28 @@ router
 )
 .post(
     '/register',
+    jwtAccessMiddleware,
     register
 )
 .get(
     '/profil',
+    jwtAccessMiddleware,
+    requireLogin,
     profil
 )
 .post(
     '/profil/:id',
+    jwtAccessMiddleware,
     upload.single('image'),
-    updateProfile
+    updateProfile,
+)
+.get(
+    '/profile',
+    jwtAccessMiddleware,
+    requireLogin,
+    (req, res) => {
+        res.redirect('/profil', { user: req.user });
+    }
 )
 .post(
     '/card',
@@ -101,7 +115,9 @@ router
     addCart
 )
 .put(
-    '/cart/:id',
+    '/cart/:cartId',
+    jwtAccessMiddleware,
+    requireLogin,
     removeCart
 )
 

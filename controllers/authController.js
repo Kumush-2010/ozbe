@@ -98,6 +98,9 @@ const generateToken = (user) => {
 };
 
 exports.loginPage = (req, res) => {
+  if (req.user) {
+    return res.redirect("/profil");
+  }
   return res.render("login", { layout: false });
 };
 
