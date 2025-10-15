@@ -19,106 +19,134 @@
     <link rel="stylesheet" href="/user-page/css/cart.css" />
     <link rel="stylesheet" href="/user-page/css/search.css" />
   </head>
-  <body>
-    <header>
-      <div class="announcement-bar">
-        <button class="prev">&#10094;</button>
-        <p>OZBE HUSH KELIBSIZ!</p>
-        <button class="next">&#10095;</button>
+   <body>
+  <header>
+    <div class="announcement-bar">
+      <button class="prev">&#10094;</button>
+      <p>OZBE HUSH KELIBSIZ!</p>
+      <button class="next">&#10095;</button>
+    </div>
+
+    <nav class="navbar">
+      <ul class="nav-links nav nav-underline">
+        <a href="/home" class="logo">
+          <img src="/images/logo.png" class="logo" alt="Logo" />
+        </a>
+        <li class="nav-item"><a class="nav-link active" href="/home">Asosiy</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/shop">Do'kon</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/contact">Aloqa</a></li>
+      </ul>
+
+      <div class="icons">
+        <a id="openSearch"><i class="fas fa-search"></i></a>
+
+        <div id="searchModal" class="modal">
+          <div class="modal-content">
+            <span id="closeModal" class="close">&times;</span>
+            <input type="text" placeholder="Search here..." class="search-input" />
+            <button class="submit-btn">Search</button>
+          </div>
+        </div>
+
+        <a href="/login"><i class="fa-regular fa-user"></i></a>
+        <a href="/cart"><i class="fa-solid fa-bag-shopping"></i></a>
+      </div>
+    </nav>
+  </header>
+
+  <div class="cart">
+    <div class="container">
+      <div class="grid_12">
+        <h1 class="savat">Savatingiz</h1>
       </div>
 
-      <nav class="navbar">
-        <!-- <a href="/admin-panel/server.html">Admin</a> -->
-        <ul class="nav-links nav nav-underline">
-          <a href="/home" class="logo"><img
-              src="images/logo.png"
-              class="logo"
-              alt=""
-            /></a>
-          <li class="nav-item"><a
-              class="nav-link active"
-              href="/home"
-            >Asosiy</a></li>
-          <li class="nav-item"><a
-              class="nav-link active"
-              href="/shop"
-            >Do'kon</a></li>
-          <li class="nav-item"><a
-              class="nav-link active"
-              href="/contact"
-            >Aloqa</a></li>
-        </ul>
-        <div class="icons">
+      <ul id="cart-container" class="items">
+        {{#if items.length}}
+          {{#each items}}
+            <li class="grid_4 item" data-product-id="{{this.product._id}}">
+              <a href="#" class="btn-remove" data-cart-id="{{this._id}}">
+                <i class="far fa-trash-alt"></i>
+              </a>
 
-          <!-- Oddiy Search Icon -->
-          <a id="openSearch">
-            <i class="fas fa-search"></i>
-          </a>
+              <div class="preview">
+                <img
+                  src="{{#if this.product.images.[0]}}{{this.product.images.[0]}}{{else}}/images/placeholder.jpg{{/if}}"
+                  alt="{{this.product.name}}"
+                />
+              </div>
 
-          <!-- Modal -->
+              <div class="details" data-price="{{multiply this.product.price this.quantity}}">
+                <h3>{{this.product.name}}</h3>
+                <p>
+                  {{this.quantity}} × {{this.product.price}} so‘m
+                  <br />
+                  <strong>Jami: {{multiply this.product.price this.quantity}} so‘m</strong>
+                </p>
+              </div>
 
-          <div id="searchModal" class="modal">
-            <div class="modal-content">
-              <span id="closeModal" class="close">&times;</span>
-              <input
-                type="text"
-                placeholder="Search here..."
-                class="search-input"
-              />
-              <button class="submit-btn">Search</button>
+              <div class="inner_container">
+                <div class="picker align-center">
+                  <a href="#" class="btn-quantity plus" data-cart-id="{{this._id}}">
+                    <i class="fas fa-plus"></i>
+                  </a>
+
+                  <div class="quantity-text">
+                    <p><span class="current_quantity">{{this.quantity}}</span></p>
+                  </div>
+
+                  <a href="#" class="btn-quantity minus" data-cart-id="{{this._id}}">
+                    <i class="fas fa-minus"></i>
+                  </a>
+
+                  <input
+                    type="hidden"
+                    class="quantity_field"
+                    name="quantity"
+                    data-unit-price="{{this.product.price}}"
+                    value="{{this.quantity}}"
+                  />
+                </div>
+              </div>
+            </li>
+          {{/each}}
+        {{else}}
+          <li><p>Savat bo‘sh.</p></li>
+        {{/if}}
+      </ul>
+
+      <div class="grid_12 summary">
+        <div class="inner_container">
+          <div class="summary-content">
+            <div class="col_1of2 meta-data">
+              <div class="sub-total">
+                <em>Jami: </em><span class="amount">0</span> so‘m
+              </div>
+              <div class="taxes">
+                <em>Mahsulotlar: </em><span class="product-count">{{items.length}}</span>
+              </div>
+            </div>
+
+            <div class="col_1of2">
+              <div class="total">
+                <span class="amount">0</span> so‘m
+              </div>
             </div>
           </div>
-          <a href="/login"><i class="fa-regular fa-user"></i></a>
-          <a href="/cart"><i class="fa-solid fa-bag-shopping"></i></a>
-        </div>
-      </nav>
-    </header>
 
-    <div class="cart">
-      <div class="container">
-        <div class="grid_12">
-          <h1 class="savat">Savatingiz</h1>
-        </div>
-        <ul id="cart-container" class="items">
-     
-        </ul>
 
-        <div class="grid_12 summary">
-          <div class="inner_container">
-            <div class="summary-content">
-              <div class="col_1of2 meta-data">
-                <div class="sub-total">
-                  <em>Jami: </em><span class="amount"></span>
-                </div>
-                <div class="taxes">
-                  <em>Mahsulotlar: </em>
-                </div>
-
-              </div>
-              <div class="col_1of2">
-                <div class="total">
-                  <span class="amount"></span>
-                </div>
-              </div>
-            </div>
-            <div class="btn-summary">
-
-              <a href="/shop" class="btn-checkout btn-reverse">Xaridni davom
-                etish</a>
-
-              <a
-                href="/checkout"
-                class="btn-checkout"
-              >Rasmiylashtirish</a>
-
-            </div>
+          <div class="btn-summary">
+            <a href="/shop" class="btn-checkout btn-reverse">Xaridni davom etish</a>
+            <a href="/checkout" class="btn-checkout">Rasmiylashtirish</a>
           </div>
         </div>
       </div>
     </div>
-     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="/user-page/js/script.js"></script>
-    <script src="/user-page/js/search.js"></script>
-    <script src="/user-page/js/cart.js" defer></script>
-  </body>
+  </div>
+
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script src="/user-page/js/script.js"></script>
+  <script src="/user-page/js/search.js"></script>
+  <script src="/user-page/js/cart.js" defer></script>
+</body>
+
 </html>

@@ -24,6 +24,10 @@ exports.wishlist = (req, res) => {
     return res.render('wishlist', { layout: false })
 }
 
-exports.cart = (req, res) => {
-    return res.render('cart', {layout: false })
+exports.cart = async (req, res) => {
+    // const cart = await Card.find(req.user.cartId).populate('items.product');
+    return res.render('cart', {
+        layout: false,
+        // items: cart ? cart.items : [],
+    })
 }

@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   } catch (error){
     console.error("Savatni yuklashda xatolik:", error);
-    container.innerHTML = "<li><p>Ma’lumot olib kelishda xatolik.</p></li>";
+    // container.innerHTML = "<li><p>Ma’lumot olib kelishda xatolik.</p></li>";
   }
 
   function renderCart(items) {
@@ -114,14 +114,23 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       });
 
-      li.querySelector(".plus").addEventListener("click", e => {
-        e.preventDefault();
-        changeQty(li, +1);
+
+      document.querySelectorAll(".btn-quantity.plus").forEach(btn => {
+        btn.addEventListener("click", e => {
+          e.preventDefault();
+          const li = e.currentTarget.closest("li");
+          changeQty(li, +1);
+        });
       });
-      li.querySelector(".minus").addEventListener("click", e => {
-        e.preventDefault();
-        changeQty(li, -1);
+      
+      document.querySelectorAll(".btn-quantity.minus").forEach(btn => {
+        btn.addEventListener("click", e => {
+          e.preventDefault();
+          const li = e.currentTarget.closest("li");
+          changeQty(li, -1);
+        });
       });
+
 
       container.appendChild(li);
     });
@@ -135,28 +144,44 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (qty < 1) return;
 
     qtyField.value = qty;
-    li.querySelector(".current_quantity").textContent = qty;
+
+    const qtyEl = li.querySelector(".current_quantity")
+    if (qtyEl) qtyEl.textContent = qty;
 
     const unitPrice = parseFloat(qtyField.dataset.unitPrice);
+
     const newLineTotal = (unitPrice * qty).toFixed(2);
 
     const details = li.querySelector(".details");
+    const itemTotalEl = li.querySelector(".item-total");
     details.dataset.price = newLineTotal;
-    details.querySelector("p").innerHTML = `<span class="current_quantity">${qty}</span> @ £${unitPrice.toFixed(2)}`;
+    itemTotalEl.textContent = `${newLineTotal} so'm`;
+
+    details.querySelector("p").innerHTML = `
+    <span class="current_quantity">${qty}</span> x ${unitPrice.toFixed(2)} so'm
+    `;
 
     updateSummary();
   }
 
   function updateSummary() {
   const detailsEls = Array.from(container.querySelectorAll(".details"));
-  const lineTotals = detailsEls.map(d => parseFloat(d.dataset.price) || 0);
-  const subTotal = lineTotals.reduce((sum, v) => sum + v, 0).toFixed(2);
-  const vat = (subTotal * 0.2).toFixed(2);
-  const total = (+subTotal + +vat).toFixed(2);
 
-document.querySelector(".sub-total .amount")?.textContent === `£${subTotal}`;
-document.querySelector(".taxes .amount")?.textContent     === `£${vat}`;
-document.querySelector(".total .amount")?.textContent     === `£${total}`;
+  const lineTotals = detailsEls
+  .map(d => parseFloat(d.dataset.price) || 0)
+  .filter(v => !isNaN(v));
+
+  const subTotal = lineTotals.reduce((sum, v) => sum + v, 0)
+  const vat = (subTotal * 0.12).toFixed(2);
+  const total = (subTotal + parseFloat(vat)).toFixed(2);
+
+  const subTotalEl = document.querySelector(".sub-total .amount")
+  const vatEl = document.querySelector(".taxes .amount")
+  const totalEl = document.querySelector(".total .amount")
+
+  if (subTotalEl) subTotalEl.textContent === `${subTotal.toFixed(2)} so'm`;
+  if (vatEl) vatEl.textContent === `${vat} so'm`;
+  if (totalEl) totalEl.textContent === `${total} so'm`;
 }
 
 });
