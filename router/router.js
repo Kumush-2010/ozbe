@@ -115,7 +115,7 @@ router
     addCart
 )
 .put(
-    '/cart/:cartId',
+    '/cart/:id',
     jwtAccessMiddleware,
     requireLogin,
     removeCart
@@ -128,6 +128,15 @@ router
 .post(
     '/checkout',
     checkout
+)
+
+.get(
+    '/logout',
+    (req, res) => {
+        res.clearCookie('token');
+        res.clearCookie('userId');
+        res.redirect('/login');
+    }
 )
 
 module.exports = router
