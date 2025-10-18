@@ -44,10 +44,7 @@
                 <section class="card small">
                     <h3>To'lov turi</h3>
                         <label class="radio">
-                            <input type="radio" name="pay" value="uzum_card" checked> Uzum kartasi bilan (chegirma)
-                        </label>
-                        <label class="radio">
-                            <input type="radio" name="pay" value="card"> Karta orqali onlayn (UZCARD/HUMO, VISA)
+                            <input type="radio" name="pay" value="card"> Karta orqali onlayn (UZCARD/HUMO)
                         </label>
                          <label class="radio">
                             <input type="radio" name="pay" value="cash"> Naqd
@@ -63,11 +60,11 @@
                         <div>Tovarlar</div>
                         <div class="muted" id="deliveryPrice">{{formatCurrency deliveryPrice}}</div>
                     </div>
-
+                    {{!-- 
                     <div class="summary-row">
                         <div>chegirmalar</div>
                         <div class="muted">-{{formatCurrency discount}}</div>
-                    </div>
+                    </div> --}}
 
                     <hr>
 
@@ -83,10 +80,6 @@
                     </p>
                 </section>
 
-                <section class="card small">
-                    <h3>Promokod</h3>
-                    <button class="btn-ghost full">Promokodni qo'shish</button>
-                </section>
             </div>
         </div>
     </div>

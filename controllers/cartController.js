@@ -18,10 +18,22 @@ exports.getCart = async (req, res) => {
         select: "name price images" 
       });
 
+    if (!items) {
+      return res.status(200).json({ success: false, message: "Savat bo‘sh." });
+    }
+
+    const totalPrice = items.items.reduce((sum, item) => {
+      const price = item.product.price || 0;
+      const quantity = item.quantity || 0;
+      return sum + price * quantity;
+    }, 0
+  )
+
     // 3) Agar elementlar bo'sh bo'lsa ham bo'sh massiv qaytiramiz
     return res.status(200).json({
       success: true,
-      items: items.items
+      items: items.items,
+      total: totalPrice.toFixed(2)
     });
   } catch (error) {
     console.error("Cartlarni olishda xatolik:", error);
