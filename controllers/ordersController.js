@@ -47,53 +47,125 @@ exports.checkoutPage = async (req, res) => {
 // };
 
 
+// exports.createOrder = async (req, res) => {
+//   try {
+//     const userId = req.user.id;
+//     const {address } = req.body;
+
+//     const cart = await Cart.findOne({ user: userId }).populate('items.product');
+
+//     if (!cart || cart.items.length === 0) {
+//       return res.status(400).json({ 
+//         success: false, 
+//         message: 'Savat bo‘sh.' });
+//     }
+
+//     const orderItems = cart.items.map(item => ({
+//       productId: item.product._id,
+//       quantity: item.quantity,
+//       price: item.product.price
+//     }));
+
+//     const totalAmount = orderItems.reduce(
+//       (sum, item) => sum + item.price * item.quantity,
+//       0
+//     );
+
+//     const order = new Order({
+//       user: userId,
+//       items: orderItems,
+//       totalAmount,
+//       address
+//     });
+
+//     await order.save();
+
+//     cart.items = [];
+//     await cart.save();
+
+//     return res.status(201).json({
+//       success: true,
+//       message: 'Buyurtma muvaffaqiyatli yaratildi.',
+//       order,
+//     });
+//   } catch (error) {
+//     console.error('Buyurtma yaratishda xatolik:', error);
+//     return res.status(500).json({
+//       success: false,
+//       message: 'Server xatosi.',
+//       error: error.message,
+//     });
+//   }
+// }
+
+ 
 exports.createOrder = async (req, res) => {
   try {
-    const userId = req.user.id;
-    const {address } = req.body;
+    const user = req.user; // auth middleware orqali
+    const {
+      user: userInfo,
+      deliveryType,
+      paymentType,
+      address,
+      items,
+      subtotal,
+      deliveryPrice,
+      discount,
+      total
+    } = req.body;
 
-    const cart = await Cart.findOne({ user: userId }).populate('items.product');
-
-    if (!cart || cart.items.length === 0) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Savat bo‘sh.' });
+    if (!user && !userInfo?.fullname) {
+      return res.status(400).json({
+        success: false,
+        message: "Foydalanuvchi ma'lumotlari topilmadi",
+      });
     }
 
-    const orderItems = cart.items.map(item => ({
-      productId: item.product._id,
-      quantity: item.quantity,
-      price: item.product.price
-    }));
+    if (!items?.length) {
+      return res.status(400).json({
+        success: false,
+        message: "Savat bo‘sh, buyurtma yaratilmaydi",
+      });
+    }
 
-    const totalAmount = orderItems.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
-
-    const order = new Order({
-      user: userId,
-      items: orderItems,
-      totalAmount,
-      address
+    // 🧾 Order yaratish
+    const order = await Order.create({
+      userId: user?._id || null,
+      fullName: userInfo.fullname,
+      email: userInfo.email,
+      phone: userInfo.phone,
+      address: address || '',
+      delivery: deliveryType,
+      payment: paymentType,
+      items: items.map(i => ({
+        productId: i._id || i.productId || null,
+        name: i.name,
+        qty: i.quantity || i.qty || 1,
+        image: i.images?.[0] || i.image || '',
+        size: i.size || ''
+      })),
+      subtotal,
+      deliveryPrice,
+      discount,
+      total,
+      status: 'pending'
     });
 
-    await order.save();
+    // 🗑 Foydalanuvchining savatini tozalash (agar mavjud bo‘lsa)
+    if (user?.cartId) {
+      await Cart.findByIdAndUpdate(user.cartId, { items: [] });
+    }
 
-    cart.items = [];
-    await cart.save();
-
-    return res.status(201).json({
+    res.status(201).json({
       success: true,
-      message: 'Buyurtma muvaffaqiyatli yaratildi.',
-      order,
+      message: "Buyurtma muvaffaqiyatli yaratildi",
+      orderId: order._id
     });
-  } catch (error) {
-    console.error('Buyurtma yaratishda xatolik:', error);
-    return res.status(500).json({
+  } catch (err) {
+    console.error("Checkout xatolik:", err);
+    res.status(500).json({
       success: false,
-      message: 'Server xatosi.',
-      error: error.message,
+      message: "Server xatosi, buyurtma yaratilmagan"
     });
   }
-}
+};

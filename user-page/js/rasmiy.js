@@ -2,7 +2,7 @@
 (function(){
   const data = window.APP_DATA || {};
   let deliveryPrice = Number(data.deliveryPrice || 7000);
-  let subtotal = Number(data.subtotal || 0);
+  let subtotal = Number(data.subtotal);
   let discount = Number(data.discount || 0);
 
   const elDeliveryPrice = document.getElementById('deliveryPrice');
@@ -54,7 +54,7 @@
       discount,
       total
     };
-
+  
     // 🔒 Minimal validatsiya
     if (!payload.user.fullname || !payload.user.phone) {
       alert("Iltimos, tizimga kiring yoki profil ma'lumotlarini to‘ldiring.");
